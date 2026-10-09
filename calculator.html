@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Калькулятор прочности стыка — СЫЗЫМ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFFFF; --surface:#FFFFFF;
+    --ink:#23282D; --ink-soft:#666E75; --ink-faint:#97A0A6;
+    --concrete:#DDE1E4; --navy:#142A45; --navy-light:#2C4A6E;
+    --accent:#12B4C4; --line:#E7EAED;
+    --warn:#B4541C;
+    --font-display:'Space Grotesk',sans-serif;
+    --font-body:'Inter',sans-serif;
+    --font-mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{ background:var(--paper); color:var(--ink); font-family:var(--font-body); line-height:1.55; font-size:16px; }
+  a{ color:var(--navy); }
+  .wrap{ max-width:960px; margin:0 auto; padding:0 28px; }
+
+  header.bar{ border-bottom:1px solid var(--line); padding:18px 0; }
+  header.bar .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .back-link{ font-family:var(--font-mono); font-size:13px; text-decoration:none; color:var(--ink-soft); }
+  .back-link:hover{ color:var(--navy); }
+  .bar-title{ font-family:var(--font-display); font-weight:600; font-size:14px; color:var(--ink); }
+
+  main{ padding:44px 0 90px; }
+  h1{ font-family:var(--font-display); font-weight:700; font-size:clamp(24px,3.6vw,34px); letter-spacing:-.01em; }
+  .lede{ margin-top:14px; max-width:64ch; color:var(--ink-soft); font-size:15.5px; }
+  .lede code{ font-family:var(--font-mono); background:#F3F5F6; padding:1px 5px; border-radius:3px; font-size:13.5px; }
+
+  /* Tabs */
+  .tabs{ display:flex; gap:4px; margin-top:36px; border-bottom:1px solid var(--line); }
+  .tab-btn{
+    font-family:var(--font-display); font-weight:600; font-size:14px;
+    background:none; border:none; padding:12px 18px; cursor:pointer;
+    color:var(--ink-soft); border-bottom:2px solid transparent; transition:color .15s ease, border-color .15s ease;
+  }
+  .tab-btn.active{ color:var(--ink); border-bottom-color:var(--accent); }
+  .tab-panel{ display:none; padding-top:32px; }
+  .tab-panel.active{ display:block; }
+
+  /* Form grid */
+  .form-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:20px 28px; }
+  @media (max-width:640px){ .form-grid{ grid-template-columns:1fr; } }
+  .field{ display:flex; flex-direction:column; gap:6px; }
+  .field label{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.03em; text-transform:uppercase; color:var(--ink-soft); }
+  .field input, .field select{
+    font-family:var(--font-mono); font-size:14.5px; color:var(--ink);
+    border:1px solid var(--line); padding:10px 12px; background:var(--surface);
+    border-radius:2px;
+  }
+  .field input:focus, .field select:focus{ outline:2px solid var(--accent); outline-offset:1px; border-color:var(--accent); }
+  .field .hint{ font-size:12px; color:var(--ink-faint); }
+
+  .section-label{ font-family:var(--font-display); font-weight:600; font-size:13px; letter-spacing:.02em; color:var(--navy); margin:28px 0 14px; text-transform:uppercase; }
+  .section-label:first-child{ margin-top:0; }
+
+  .run-btn{
+    margin-top:28px; display:inline-flex; align-items:center; gap:8px;
+    background:var(--navy); color:#fff; font-family:var(--font-display); font-weight:600; font-size:14px;
+    padding:13px 26px; border:none; cursor:pointer; transition:background .2s ease;
+  }
+  .run-btn:hover{ background:var(--accent); color:var(--navy); }
+
+  /* Results */
+  .result-panel{ margin-top:32px; background:#F8FAFA; border:1px solid var(--line); padding:26px 28px; display:none; }
+  .result-panel.show{ display:block; }
+  .result-headline{ font-family:var(--font-display); font-weight:700; font-size:20px; margin-bottom:4px; }
+  .result-sub{ font-size:13.5px; color:var(--ink-soft); margin-bottom:20px; }
+  .result-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:16px; }
+  .result-item{ border-top:2px solid var(--ink); padding-top:8px; }
+  .result-item .label{ font-family:var(--font-mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft); }
+  .result-item .value{ font-family:var(--font-mono); font-size:18px; font-weight:600; color:var(--ink); margin-top:3px; }
+  .result-item .value.pass{ color:#1A8A5F; }
+  .result-item .value.fail{ color:var(--warn); }
+
+  .note-box{ margin-top:18px; padding:12px 14px; font-size:13px; border-left:2px solid var(--concrete); color:var(--ink-soft); font-family:var(--font-mono); }
+  .note-box.warn{ border-left-color:var(--warn); color:var(--warn); }
+  .note-box.empty{ border-left-color:var(--accent); }
+
+  footer{ padding:30px 0 60px; border-top:1px solid var(--line); margin-top:60px; }
+  .footer-row{ font-family:var(--font-mono); font-size:12px; color:var(--ink-soft); }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="back-link" href="index.html">← СЫЗЫМ</a>
+    <span class="bar-title">Калькулятор прочности стыка</span>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <h1>Прочность платформенного стыка</h1>
+    <p class="lede">Расчёт по формулам приложения Б СП 63.13330 для одностороннего платформенного стыка плиты перекрытия со стеновыми панелями. Коэффициент <code>ηs</code> (усиление опорных площадок за счёт армирования) подтягивается из калибровочной таблицы, которую ведёт администратор проекта — см. <code>coefficients.json</code>.</p>
+
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" data-tab="select" role="tab" aria-selected="true">Исходные данные — подбор армирования</button>
+      <button class="tab-btn" data-tab="factors" role="tab" aria-selected="false">Факторы, влияющие на расчёт</button>
+    </div>
+
+    <!-- TAB 1: подбор оптимального процента армирования -->
+    <section class="tab-panel active" id="tab-select">
+      <div class="section-label">Геометрия и материалы</div>
+      <div class="form-grid">
+        <div class="field"><label>Толщина стеновой панели, t (мм)</label><input type="number" id="s_t" value="180"></div>
+        <div class="field"><label>Ширина простенка / стыка, dj (мм)</label><input type="number" id="s_dj" value="1000"></div>
+        <div class="field"><label>Класс бетона стеновой панели</label><select id="s_classWall"></select></div>
+        <div class="field"><label>Класс бетона плиты перекрытия</label><select id="s_classPlate"></select></div>
+      </div>
+
+      <div class="section-label">Шов</div>
+      <div class="form-grid">
+        <div class="field"><label>Прочность раствора шва Rm (МПа)</label><input type="number" id="s_Rm" value="10"></div>
+        <div class="field"><label>Номинальная толщина шва (мм)</label><input type="number" id="s_tmnom" value="20"></div>
+        <div class="field"><label>Номинальная ширина шва bj (мм)</label><input type="number" id="s_bj" value="170"></div>
+        <div class="field"><label>Смещения δw / δp (мм)</label>
+          <div style="display:flex; gap:8px;">
+            <input type="number" id="s_deltaW" value="10" style="width:50%;">
+            <input type="number" id="s_deltaP" value="15" style="width:50%;">
+          </div>
+        </div>
+      </div>
+
+      <div class="section-label">Нагрузка и параметры подбора</div>
+      <div class="form-grid">
+        <div class="field"><label>Требуемая несущая способность стыка (тс/м)</label><input type="number" id="s_required" value="80"></div>
+        <div class="field"><label>Тип включений</label><select id="s_inclusion"></select></div>
+        <div class="field"><label>Эксцентриситет нагрузки (мм)</label><input type="number" id="s_ecc" value="0"></div>
+        <div class="field"><label>Макс. % армирования для перебора</label><input type="number" id="s_maxArm" value="6" step="0.1"></div>
+      </div>
+
+      <button class="run-btn" id="s_run">Подобрать минимальный % армирования</button>
+      <div class="result-panel" id="s_result"></div>
+    </section>
+
+    <!-- TAB 2: факторы, прямой расчёт -->
+    <section class="tab-panel" id="tab-factors">
+      <div class="section-label">Геометрия и материалы</div>
+      <div class="form-grid">
+        <div class="field"><label>Толщина стеновой панели, t (мм)</label><input type="number" id="f_t" value="180"></div>
+        <div class="field"><label>Ширина простенка / стыка, dj (мм)</label><input type="number" id="f_dj" value="1000"></div>
+        <div class="field"><label>Класс бетона стеновой панели (марка плиты*)</label><select id="f_classWall"></select></div>
+        <div class="field"><label>Класс бетона плиты перекрытия</label><select id="f_classPlate"></select></div>
+      </div>
+
+      <div class="section-label">Шов</div>
+      <div class="form-grid">
+        <div class="field"><label>Марка (прочность) раствора шва Rm, МПа</label><input type="number" id="f_Rm" value="10"></div>
+        <div class="field"><label>Толщина шва (мм)</label><input type="number" id="f_tmnom" value="20"></div>
+        <div class="field"><label>Номинальная ширина шва bj (мм)</label><input type="number" id="f_bj" value="170"></div>
+        <div class="field"><label>Смещения δw / δp (мм)</label>
+          <div style="display:flex; gap:8px;">
+            <input type="number" id="f_deltaW" value="10" style="width:50%;">
+            <input type="number" id="f_deltaP" value="15" style="width:50%;">
+          </div>
+        </div>
+      </div>
+
+      <div class="section-label">Факторы, влияющие на ηs</div>
+      <div class="form-grid">
+        <div class="field"><label>Процент армирования, %</label><input type="number" id="f_arm" value="1.0" step="0.1"></div>
+        <div class="field"><label>Тип включений</label><select id="f_inclusion"></select></div>
+        <div class="field"><label>Эксцентриситет нагрузки (мм)</label><input type="number" id="f_ecc" value="0"></div>
+      </div>
+
+      <button class="run-btn" id="f_run">Рассчитать</button>
+      <div class="result-panel" id="f_result"></div>
+    </section>
+
+    <p class="lede" style="margin-top:40px; font-size:13px;">γb1=0.9, γb2=0.9, γb3=0.85 приняты по расчётному листу проекта как фиксированные — если нужно сделать их редактируемыми, скажите отдельно.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap footer-row">ООО «СЫЗЫМ» · калькулятор основан на прил. Б СП 63.13330</div>
+</footer>
+
+<script>
+(function(){
+  // ---------- Concrete class → Rb (МПа), из листа "материалы" ----------
+  var RB_TABLE = {
+    'B1.5':0,'B2':0,'B2.5':0,'B3.5':2.1,'B5':2.8,'B7.5':4.5,'B10':6,'B12.5':7.5,
+    'B15':8.5,'B20':11.5,'B25':14.5,'B30':17,'B35':19.5,'B40':22,'B45':25,'B50':27.5,
+    'B55':30,'B60':33,'B70':37,'B80':41,'B90':44,'B100':47.5
+  };
+  var GAMMA_BI = 0.9 * 0.9 * 0.85; // γb1*γb2*γb3, фиксировано по расчётному листу проекта
+
+  function classNumeric(cls){ return parseFloat(cls.replace('B','')); }
+
+  function populateClassSelect(sel, def){
+    Object.keys(RB_TABLE).forEach(function(c){
+      var o = document.createElement('option');
+      o.value = c; o.textContent = c;
+      if (c === def) o.selected = true;
+      sel.appendChild(o);
+    });
+  }
+
+  var INCLUSION_TYPES = ['без включений','эл. коробка на НСП','эл. коробка на ВСП','эл. коробки на обеих панелях'];
+  function populateInclusionSelect(sel){
+    INCLUSION_TYPES.forEach(function(t){
+      var o = document.createElement('option'); o.value = t; o.textContent = t; sel.appendChild(o);
+    });
+  }
+
+  ['s_classWall','f_classWall'].forEach(function(id){ populateClassSelect(document.getElementById(id), 'B25'); });
+  ['s_classPlate','f_classPlate'].forEach(function(id){ populateClassSelect(document.getElementById(id), 'B20'); });
+  ['s_inclusion','f_inclusion'].forEach(function(id){ populateInclusionSelect(document.getElementById(id)); });
+
+  // ---------- Coefficients table (ηs), loaded from coefficients.json ----------
+  var coeffData = { rows: [] };
+  fetch('coefficients.json').then(function(r){ return r.json(); }).then(function(d){
+    coeffData = d;
+  }).catch(function(){
+    console.warn('coefficients.json не найден или недоступен — используется базовое значение ηs=1.0');
+  });
+
+  // Inverse-distance-weighted lookup of ηs over (armPercent, eccentricity) within a matching inclusionType
+  function lookupEtaS(armPercent, inclusionType, eccentricity){
+    var rows = (coeffData && coeffData.rows) || [];
+    if (!rows.length) {
+      return { value: 1.0, sourceCount: 0, exact: false, empty: true };
+    }
+    var pool = rows.filter(function(r){ return r.inclusionType === inclusionType; });
+    var usedFallbackType = false;
+    if (!pool.length) { pool = rows; usedFallbackType = true; }
+
+    var exact = pool.find(function(r){
+      return Math.abs(r.armPercent - armPercent) < 1e-9 && Math.abs(r.eccentricity - eccentricity) < 1e-9;
+    });
+    if (exact) return { value: exact.coefficient, sourceCount: 1, exact: true, usedFallbackType: usedFallbackType };
+
+    var wSum = 0, vSum = 0;
+    pool.forEach(function(r){
+      var dArm = r.armPercent - armPercent;
+      var dEcc = r.eccentricity - eccentricity;
+      var dist = Math.sqrt(dArm*dArm + dEcc*dEcc) || 1e-6;
+      var w = 1 / (dist*dist);
+      wSum += w; vSum += w * r.coefficient;
+    });
+    return { value: vSum / wSum, sourceCount: pool.length, exact: false, usedFallbackType: usedFallbackType };
+  }
+
+  // ---------- Core formula: прил. Б СП 63.13330, платформенный односторонний стык ----------
+  function computeJoint(p){
+    var RbWall = RB_TABLE[p.classWall];
+    var RbPlate = RB_TABLE[p.classPlate];
+    var RbwGamma = RbWall * GAMMA_BI;
+    var RbpGamma = RbPlate * GAMMA_BI;
+    var Bw = classNumeric(p.classWall);
+
+    var tm = 1.4 * p.tmnom;
+    var deltaPl = Math.sqrt(p.deltaP*p.deltaP + p.deltaW*p.deltaW);
+    var bm = p.bj - deltaPl;
+    var etaM = 1 - (2 - tm/bm) * (tm/bm) / (1 + 2*p.Rm/Bw);
+    var etaPl = (RbpGamma < RbwGamma) ? (1 - Math.pow(1 - RbpGamma/RbwGamma, 2)) : 1;
+    var gammaPl = 1.0; // односторонний платформенный стык
+    var bpl = p.bj;    // для одностороннего платформенного стыка bpl=bj
+    var etaJ = (bpl - deltaPl) * gammaPl * etaPl / p.t;
+
+    var Rc = RbwGamma * etaM * etaJ * p.etaS;
+    var NjN = Rc * p.t * p.dj;          // Н
+    var NjLongN = 0.9 * NjN;            // Н, длительная
+    var NjLong_tPerM = (NjLongN / (p.dj/1000)) / 9806.65; // тс/м
+
+    return { RbwGamma:RbwGamma, RbpGamma:RbpGamma, etaM:etaM, etaPl:etaPl, etaJ:etaJ, Rc:Rc, NjN:NjN, NjLongN:NjLongN, NjLong_tPerM:NjLong_tPerM };
+  }
+
+  function fmt(n, d){ return Number(n).toLocaleString('ru-RU', { maximumFractionDigits: d===undefined?3:d }); }
+
+  function etaNoteHTML(look){
+    if (look.empty) {
+      return '<div class="note-box empty">Таблица коэффициентов пуста — используется базовое ηs = 1.0 (без учёта армирования). Калибровочные коэффициенты не заданы.</div>';
+    }
+    var cls = (look.value < 1 || look.value > 1.3) ? 'warn' : '';
+    var msg = look.exact
+      ? 'Точное совпадение с калибровочной точкой (1 запись).'
+      : 'Интерполяция по ближайшим калибровочным точкам (' + look.sourceCount + ' шт., метод IDW).';
+    if (look.usedFallbackType) msg += ' Записей для этого типа включений нет — использованы все записи таблицы.';
+    if (look.value < 1 || look.value > 1.3) msg += ' Внимание: значение вне диапазона ηs=1.0–1.3, допустимого по СП 63.13330.';
+    return '<div class="note-box ' + cls + '">ηs = ' + fmt(look.value,4) + '. ' + msg + '</div>';
+  }
+
+  // ---------- Tab 1: подбор % армирования ----------
+  document.getElementById('s_run').addEventListener('click', function(){
+    var base = {
+      t: parseFloat(document.getElementById('s_t').value),
+      dj: parseFloat(document.getElementById('s_dj').value),
+      classWall: document.getElementById('s_classWall').value,
+      classPlate: document.getElementById('s_classPlate').value,
+      Rm: parseFloat(document.getElementById('s_Rm').value),
+      tmnom: parseFloat(document.getElementById('s_tmnom').value),
+      bj: parseFloat(document.getElementById('s_bj').value),
+      deltaW: parseFloat(document.getElementById('s_deltaW').value),
+      deltaP: parseFloat(document.getElementById('s_deltaP').value)
+    };
+    var required = parseFloat(document.getElementById('s_required').value);
+    var inclusion = document.getElementById('s_inclusion').value;
+    var ecc = parseFloat(document.getElementById('s_ecc').value);
+    var maxArm = parseFloat(document.getElementById('s_maxArm').value);
+
+    var step = 0.05, found = null, lastResult = null, lastLook = null;
+    for (var arm = 0; arm <= maxArm + 1e-9; arm += step) {
+      var look = lookupEtaS(arm, inclusion, ecc);
+      var res = computeJoint(Object.assign({}, base, { etaS: look.value }));
+      lastResult = res; lastLook = look;
+      if (res.NjLong_tPerM >= required) { found = { arm: arm, res: res, look: look }; break; }
+    }
+
+    var panel = document.getElementById('s_result');
+    panel.classList.add('show');
+    if (found) {
+      panel.innerHTML =
+        '<div class="result-headline">Минимальный % армирования: ' + fmt(found.arm,2) + '%</div>' +
+        '<div class="result-sub">Обеспечивает требуемую несущую способность ' + fmt(required,1) + ' тс/м</div>' +
+        '<div class="result-grid">' +
+          '<div class="result-item"><div class="label">Rc</div><div class="value">' + fmt(found.res.Rc,3) + ' МПа</div></div>' +
+          '<div class="result-item"><div class="label">Nj (мгновенная)</div><div class="value">' + fmt(found.res.NjN/1000,1) + ' кН</div></div>' +
+          '<div class="result-item"><div class="label">Nj (длительная)</div><div class="value pass">' + fmt(found.res.NjLong_tPerM,2) + ' тс/м</div></div>' +
+          '<div class="result-item"><div class="label">ηs использован</div><div class="value">' + fmt(found.look.value,4) + '</div></div>' +
+        '</div>' + etaNoteHTML(found.look);
+    } else {
+      panel.innerHTML =
+        '<div class="result-headline">Требуемая несущая способность не достигнута</div>' +
+        '<div class="result-sub">В переборе до ' + fmt(maxArm,1) + '% армирования максимум составил ' + fmt(lastResult.NjLong_tPerM,2) + ' тс/м — этого недостаточно для ' + fmt(required,1) + ' тс/м. Увеличьте диапазон перебора, толщину стыка dj/t, либо марку бетона.</div>' +
+        etaNoteHTML(lastLook);
+    }
+  });
+
+  // ---------- Tab 2: прямой расчёт по факторам ----------
+  document.getElementById('f_run').addEventListener('click', function(){
+    var arm = parseFloat(document.getElementById('f_arm').value);
+    var inclusion = document.getElementById('f_inclusion').value;
+    var ecc = parseFloat(document.getElementById('f_ecc').value);
+    var look = lookupEtaS(arm, inclusion, ecc);
+
+    var base = {
+      t: parseFloat(document.getElementById('f_t').value),
+      dj: parseFloat(document.getElementById('f_dj').value),
+      classWall: document.getElementById('f_classWall').value,
+      classPlate: document.getElementById('f_classPlate').value,
+      Rm: parseFloat(document.getElementById('f_Rm').value),
+      tmnom: parseFloat(document.getElementById('f_tmnom').value),
+      bj: parseFloat(document.getElementById('f_bj').value),
+      deltaW: parseFloat(document.getElementById('f_deltaW').value),
+      deltaP: parseFloat(document.getElementById('f_deltaP').value),
+      etaS: look.value
+    };
+    var res = computeJoint(base);
+
+    var panel = document.getElementById('f_result');
+    panel.classList.add('show');
+    panel.innerHTML =
+      '<div class="result-headline">Rc = ' + fmt(res.Rc,3) + ' МПа</div>' +
+      '<div class="result-sub">ηm=' + fmt(res.etaM,4) + ' · ηj=' + fmt(res.etaJ,4) + ' · ηpl=' + fmt(res.etaPl,4) + '</div>' +
+      '<div class="result-grid">' +
+        '<div class="result-item"><div class="label">Nj, мгновенная</div><div class="value">' + fmt(res.NjN/1000,1) + ' кН</div></div>' +
+        '<div class="result-item"><div class="label">Nj, длительная</div><div class="value">' + fmt(res.NjLongN/1000,1) + ' кН</div></div>' +
+        '<div class="result-item"><div class="label">Nj, длительная</div><div class="value">' + fmt(res.NjLong_tPerM,2) + ' тс/м</div></div>' +
+      '</div>' + etaNoteHTML(look);
+  });
+
+  // ---------- Tabs ----------
+  document.querySelectorAll('.tab-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+      document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

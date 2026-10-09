@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 592 172" role="img" aria-labelledby="logoTitle logoDesc">
+  <title id="logoTitle">СЫЗЫМ</title>
+  <desc id="logoDesc">Логотип компании «Сызым»: векторные контуры букв, которые обводит механический карандаш при наведении курсора.</desc>
+
+  <style>
+    .letter{ cursor:pointer; }
+    .hit{ fill:transparent; }
+
+    .glyph-ghost{
+      fill:none; stroke:#D7DBDE; stroke-width:5;
+      stroke-linecap:round; stroke-linejoin:round;
+    }
+    .glyph-ink{
+      fill:none; stroke:#12B4C4; stroke-width:5;
+      stroke-linecap:round; stroke-linejoin:round;
+      stroke-dasharray:1000; stroke-dashoffset:1000;
+      transition:stroke-dashoffset 1.1s cubic-bezier(.65,0,.35,1);
+    }
+    .letter:hover .glyph-ink,
+    .letter:focus-visible .glyph-ink,
+    .letter.is-active .glyph-ink{ stroke-dashoffset:0; }
+
+    .pencil{
+      opacity:0;
+      offset-distance:0%;
+      offset-rotate:auto;
+      transition:offset-distance 1.1s cubic-bezier(.65,0,.35,1), opacity .25s ease;
+    }
+    .letter:hover .pencil,
+    .letter:focus-visible .pencil,
+    .letter.is-active .pencil{ opacity:1; offset-distance:100%; }
+
+    .pencil-body{ fill:#12B4C4; }
+    .pencil-grip{ fill:#0E93A0; }
+    .pencil-tip{ fill:#142A45; }
+    .pencil-point{ fill:#142A45; }
+
+    .letter:focus{ outline:none; }
+    .letter:focus-visible .hit{ outline:2px solid #142A45; outline-offset:2px; }
+
+    @supports not (offset-path: path('M0 0')){
+      .pencil{ display:none; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .glyph-ink{ stroke-dashoffset:0; transition:none; }
+      .pencil{ display:none; }
+    }
+  </style>
+
+  <!-- С -->
+  <g class="letter" tabindex="0" aria-label="Буква С" transform="translate(0,0)">
+    <rect class="hit" x="0" y="0" width="100" height="160"/>
+    <path class="glyph-ghost" d="M85 45 A45 45 0 1 0 85 115"/>
+    <path class="glyph-ink"   d="M85 45 A45 45 0 1 0 85 115"/>
+    <g class="pencil" style="offset-path:path('M85 45 A45 45 0 1 0 85 115')">
+      <rect class="pencil-body"  x="-11" y="-3" width="16" height="6" rx="1.5"/>
+      <rect class="pencil-grip"  x="-3"  y="-3" width="3"  height="6"/>
+      <path class="pencil-tip"   d="M5 -3 L14 0 L5 3 Z"/>
+      <circle class="pencil-point" cx="13.2" cy="0" r="1"/>
+    </g>
+  </g>
+
+  <!-- Ы -->
+  <g class="letter" tabindex="0" aria-label="Буква Ы" transform="translate(120,0)">
+    <rect class="hit" x="0" y="0" width="100" height="160"/>
+    <path class="glyph-ghost" d="M25 20 L25 88 Q58 88 58 112 Q58 140 25 140 M80 20 L80 140"/>
+    <path class="glyph-ink"   d="M25 20 L25 88 Q58 88 58 112 Q58 140 25 140 M80 20 L80 140"/>
+    <g class="pencil" style="offset-path:path('M25 20 L25 88 Q58 88 58 112 Q58 140 25 140 M80 20 L80 140')">
+      <rect class="pencil-body"  x="-11" y="-3" width="16" height="6" rx="1.5"/>
+      <rect class="pencil-grip"  x="-3"  y="-3" width="3"  height="6"/>
+      <path class="pencil-tip"   d="M5 -3 L14 0 L5 3 Z"/>
+      <circle class="pencil-point" cx="13.2" cy="0" r="1"/>
+    </g>
+  </g>
+
+  <!-- З -->
+  <g class="letter" tabindex="0" aria-label="Буква З" transform="translate(240,0)">
+    <rect class="hit" x="0" y="0" width="100" height="160"/>
+    <path class="glyph-ghost" d="M28 32 Q78 18 78 55 Q78 78 46 80 Q78 82 78 108 Q78 148 26 130"/>
+    <path class="glyph-ink"   d="M28 32 Q78 18 78 55 Q78 78 46 80 Q78 82 78 108 Q78 148 26 130"/>
+    <g class="pencil" style="offset-path:path('M28 32 Q78 18 78 55 Q78 78 46 80 Q78 82 78 108 Q78 148 26 130')">
+      <rect class="pencil-body"  x="-11" y="-3" width="16" height="6" rx="1.5"/>
+      <rect class="pencil-grip"  x="-3"  y="-3" width="3"  height="6"/>
+      <path class="pencil-tip"   d="M5 -3 L14 0 L5 3 Z"/>
+      <circle class="pencil-point" cx="13.2" cy="0" r="1"/>
+    </g>
+  </g>
+
+  <!-- Ы -->
+  <g class="letter" tabindex="0" aria-label="Буква Ы" transform="translate(360,0)">
+    <rect class="hit" x="0" y="0" width="100" height="160"/>
+    <path class="glyph-ghost" d="M25 20 L25 88 Q58 88 58 112 Q58 140 25 140 M80 20 L80 140"/>
+    <path class="glyph-ink"   d="M25 20 L25 88 Q58 88 58 112 Q58 140 25 140 M80 20 L80 140"/>
+    <g class="pencil" style="offset-path:path('M25 20 L25 88 Q58 88 58 112 Q58 140 25 140 M80 20 L80 140')">
+      <rect class="pencil-body"  x="-11" y="-3" width="16" height="6" rx="1.5"/>
+      <rect class="pencil-grip"  x="-3"  y="-3" width="3"  height="6"/>
+      <path class="pencil-tip"   d="M5 -3 L14 0 L5 3 Z"/>
+      <circle class="pencil-point" cx="13.2" cy="0" r="1"/>
+    </g>
+  </g>
+
+  <!-- М -->
+  <g class="letter" tabindex="0" aria-label="Буква М" transform="translate(480,0)">
+    <rect class="hit" x="0" y="0" width="100" height="160"/>
+    <path class="glyph-ghost" d="M20 140 L20 20 L50 90 L80 20 L80 140"/>
+    <path class="glyph-ink"   d="M20 140 L20 20 L50 90 L80 20 L80 140"/>
+    <g class="pencil" style="offset-path:path('M20 140 L20 20 L50 90 L80 20 L80 140')">
+      <rect class="pencil-body"  x="-11" y="-3" width="16" height="6" rx="1.5"/>
+      <rect class="pencil-grip"  x="-3"  y="-3" width="3"  height="6"/>
+      <path class="pencil-tip"   d="M5 -3 L14 0 L5 3 Z"/>
+      <circle class="pencil-point" cx="13.2" cy="0" r="1"/>
+    </g>
+  </g>
+
+  <script>
+    (function(){
+      var letters = document.querySelectorAll('.letter');
+      var isTouch = window.matchMedia && matchMedia('(hover: none)').matches;
+      if (!isTouch) return;
+      letters.forEach(function(letter){
+        letter.addEventListener('click', function(){
+          var wasActive = letter.classList.contains('is-active');
+          letters.forEach(function(l){ l.classList.remove('is-active'); });
+          if (!wasActive) letter.classList.add('is-active');
+        });
+      });
+    })();
+  </script>
+</svg>
