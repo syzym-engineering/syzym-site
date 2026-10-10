@@ -3,382 +3,399 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Калькулятор прочности стыка — СЫЗЫМ</title>
+<title>Калькулятор стыка платформенных панелей — СЫЗЫМ</title>
+<meta name="description" content="Онлайн-калькулятор несущей способности одностороннего платформенного стыка железобетонных стеновых панелей и подбор армирования.">
+<link rel="icon" href="sizym-logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --paper:#FFFFFF; --surface:#FFFFFF;
-    --ink:#23282D; --ink-soft:#666E75; --ink-faint:#97A0A6;
-    --concrete:#DDE1E4; --navy:#142A45; --navy-light:#2C4A6E;
-    --accent:#12B4C4; --line:#E7EAED;
-    --warn:#B4541C;
-    --font-display:'Space Grotesk',sans-serif;
-    --font-body:'Inter',sans-serif;
-    --font-mono:'JetBrains Mono',monospace;
-  }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  body{ background:var(--paper); color:var(--ink); font-family:var(--font-body); line-height:1.55; font-size:16px; }
-  a{ color:var(--navy); }
-  .wrap{ max-width:960px; margin:0 auto; padding:0 28px; }
-
-  header.bar{ border-bottom:1px solid var(--line); padding:18px 0; }
-  header.bar .wrap{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
-  .back-link{ font-family:var(--font-mono); font-size:13px; text-decoration:none; color:var(--ink-soft); }
-  .back-link:hover{ color:var(--navy); }
-  .bar-title{ font-family:var(--font-display); font-weight:600; font-size:14px; color:var(--ink); }
-
-  main{ padding:44px 0 90px; }
-  h1{ font-family:var(--font-display); font-weight:700; font-size:clamp(24px,3.6vw,34px); letter-spacing:-.01em; }
-  .lede{ margin-top:14px; max-width:64ch; color:var(--ink-soft); font-size:15.5px; }
-  .lede code{ font-family:var(--font-mono); background:#F3F5F6; padding:1px 5px; border-radius:3px; font-size:13.5px; }
-
-  /* Tabs */
-  .tabs{ display:flex; gap:4px; margin-top:36px; border-bottom:1px solid var(--line); }
-  .tab-btn{
-    font-family:var(--font-display); font-weight:600; font-size:14px;
-    background:none; border:none; padding:12px 18px; cursor:pointer;
-    color:var(--ink-soft); border-bottom:2px solid transparent; transition:color .15s ease, border-color .15s ease;
-  }
-  .tab-btn.active{ color:var(--ink); border-bottom-color:var(--accent); }
-  .tab-panel{ display:none; padding-top:32px; }
-  .tab-panel.active{ display:block; }
-
-  /* Form grid */
-  .form-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:20px 28px; }
-  @media (max-width:640px){ .form-grid{ grid-template-columns:1fr; } }
-  .field{ display:flex; flex-direction:column; gap:6px; }
-  .field label{ font-family:var(--font-mono); font-size:11.5px; letter-spacing:.03em; text-transform:uppercase; color:var(--ink-soft); }
-  .field input, .field select{
-    font-family:var(--font-mono); font-size:14.5px; color:var(--ink);
-    border:1px solid var(--line); padding:10px 12px; background:var(--surface);
-    border-radius:2px;
-  }
-  .field input:focus, .field select:focus{ outline:2px solid var(--accent); outline-offset:1px; border-color:var(--accent); }
-  .field .hint{ font-size:12px; color:var(--ink-faint); }
-
-  .section-label{ font-family:var(--font-display); font-weight:600; font-size:13px; letter-spacing:.02em; color:var(--navy); margin:28px 0 14px; text-transform:uppercase; }
-  .section-label:first-child{ margin-top:0; }
-
-  .run-btn{
-    margin-top:28px; display:inline-flex; align-items:center; gap:8px;
-    background:var(--navy); color:#fff; font-family:var(--font-display); font-weight:600; font-size:14px;
-    padding:13px 26px; border:none; cursor:pointer; transition:background .2s ease;
-  }
-  .run-btn:hover{ background:var(--accent); color:var(--navy); }
-
-  /* Results */
-  .result-panel{ margin-top:32px; background:#F8FAFA; border:1px solid var(--line); padding:26px 28px; display:none; }
-  .result-panel.show{ display:block; }
-  .result-headline{ font-family:var(--font-display); font-weight:700; font-size:20px; margin-bottom:4px; }
-  .result-sub{ font-size:13.5px; color:var(--ink-soft); margin-bottom:20px; }
-  .result-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:16px; }
-  .result-item{ border-top:2px solid var(--ink); padding-top:8px; }
-  .result-item .label{ font-family:var(--font-mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft); }
-  .result-item .value{ font-family:var(--font-mono); font-size:18px; font-weight:600; color:var(--ink); margin-top:3px; }
-  .result-item .value.pass{ color:#1A8A5F; }
-  .result-item .value.fail{ color:var(--warn); }
-
-  .note-box{ margin-top:18px; padding:12px 14px; font-size:13px; border-left:2px solid var(--concrete); color:var(--ink-soft); font-family:var(--font-mono); }
-  .note-box.warn{ border-left-color:var(--warn); color:var(--warn); }
-  .note-box.empty{ border-left-color:var(--accent); }
-
-  footer{ padding:30px 0 60px; border-top:1px solid var(--line); margin-top:60px; }
-  .footer-row{ font-family:var(--font-mono); font-size:12px; color:var(--ink-soft); }
-</style>
+<link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.add('js');</script>
+<script src="site.js" defer></script>
 </head>
 <body>
+<header class="topnav" id="topnav">
+  <div class="wrap topnav-inner">
+    <a class="brand" href="index.html" aria-label="СЫЗЫМ — на главную"><svg width="132" height="38" xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 592 172" role="img" aria-labelledby="logoTitle logoDesc">
+  <title id="logoTitle">СЫЗЫМ</title>
+  <desc id="logoDesc">Логотип компании «Сызым»: векторные контуры букв, которые обводит механический карандаш при наведении курсора.</desc>
 
-<header class="bar">
-  <div class="wrap">
-    <a class="back-link" href="index.html">← СЫЗЫМ</a>
-    <span class="bar-title">Калькулятор прочности стыка</span>
+  <style>
+    .letter{ cursor:pointer; }
+    .hit{ fill:transparent; }
+
+    .glyph-ghost{
+      fill:none; stroke:#D7DBDE; stroke-width:5;
+      stroke-linecap:round; stroke-linejoin:round;
+    }
+    .glyph-ink{
+      fill:none; stroke:#12B4C4; stroke-width:5;
+      stroke-linecap:round; stroke-linejoin:round;
+      stroke-dasharray:1000; stroke-dashoffset:1000;
+      transition:stroke-dashoffset 1.1s cubic-bezier(.65,0,.35,1);
+    }
+    .letter:hover .glyph-ink,
+    .letter:focus-visible .glyph-ink,
+    .letter.is-active .glyph-ink{ stroke-dashoffset:0; }
+
+    .pencil{
+      opacity:0;
+      offset-distance:0%;
+      offset-rotate:auto;
+      transition:offset-distance 1.1s cubic-bezier(.65,0,.35,1), opacity .25s ease;
+    }
+    .letter:hover .pencil,
+    .letter:focus-visible .pencil,
+    .letter.is-active .pencil{ opacity:1; offset-distance:100%; }
+
+    .pencil-body{ fill:#12B4C4; }
+    .pencil-grip{ fill:#0E93A0; }
+    .pencil-tip{ fill:#142A45; }
+    .pencil-point{ fill:#142A45; }
+
+    .letter:focus{ outline:none; }
+    .letter:focus-visible .hit{ outline:2px solid #142A45; outline-offset:2px; }
+
+    @supports not (offset-path: path('M0 0')){
+      .pencil{ display:none; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .glyph-ink{ stroke-dashoffset:0; transition:none; }
+      .pencil{ display:none; }
+    }
+  </style>
+
+  <!-- С -->
+  <g class="letter" tabindex="0" aria-label="Буква С" transform="translate(0,0)">
+    <rect class="hit" x="0" y="0" width="100" height="160"/>
+    <path class="glyph-ghost" d="M85 45 A45 45 0 1 0 85 115"/>
+    <path class="glyph-ink"   d="M85 45 A45 45 0 1 0 85 115"/>
+    <g class="pencil" style="offset-path:path('M85 45 A45 45 0 1 0 85 115')">
+      <rect class="pencil-body"  x="-11" y="-3" width="16" height="6" rx="1.5"/>
+      <rect class="pencil-grip"  x="-3"  y="-3" width="3"  height="6"/>
+      <path class="pencil-tip"   d="M5 -3 L14 0 L5 3 Z"/>
+      <circle class="pencil-point" cx="13.2" cy="0" r="1"/>
+    </g>
+  </g>
+
+  <!-- Ы -->
+  <g class="letter" tabindex="0" aria-label="Буква Ы" transform="translate(120,0)">
+    <rect class="hit" x="0" y="0" width="100" height="160"/>
+    <path class="glyph-ghost" d="M25 20 L25 88 Q58 88 58 112 Q58 140 25 140 M80 20 L80 140"/>
+    <path class="glyph-ink"   d="M25 20 L25 88 Q58 88 58 112 Q58 140 25 140 M80 20 L80 140"/>
+    <g class="pencil" style="offset-path:path('M25 20 L25 88 Q58 88 58 112 Q58 140 25 140 M80 20 L80 140')">
+      <rect class="pencil-body"  x="-11" y="-3" width="16" height="6" rx="1.5"/>
+      <rect class="pencil-grip"  x="-3"  y="-3" width="3"  height="6"/>
+      <path class="pencil-tip"   d="M5 -3 L14 0 L5 3 Z"/>
+      <circle class="pencil-point" cx="13.2" cy="0" r="1"/>
+    </g>
+  </g>
+
+  <!-- З -->
+  <g class="letter" tabindex="0" aria-label="Буква З" transform="translate(240,0)">
+    <rect class="hit" x="0" y="0" width="100" height="160"/>
+    <path class="glyph-ghost" d="M28 32 Q78 18 78 55 Q78 78 46 80 Q78 82 78 108 Q78 148 26 130"/>
+    <path class="glyph-ink"   d="M28 32 Q78 18 78 55 Q78 78 46 80 Q78 82 78 108 Q78 148 26 130"/>
+    <g class="pencil" style="offset-path:path('M28 32 Q78 18 78 55 Q78 78 46 80 Q78 82 78 108 Q78 148 26 130')">
+      <rect class="pencil-body"  x="-11" y="-3" width="16" height="6" rx="1.5"/>
+      <rect class="pencil-grip"  x="-3"  y="-3" width="3"  height="6"/>
+      <path class="pencil-tip"   d="M5 -3 L14 0 L5 3 Z"/>
+      <circle class="pencil-point" cx="13.2" cy="0" r="1"/>
+    </g>
+  </g>
+
+  <!-- Ы -->
+  <g class="letter" tabindex="0" aria-label="Буква Ы" transform="translate(360,0)">
+    <rect class="hit" x="0" y="0" width="100" height="160"/>
+    <path class="glyph-ghost" d="M25 20 L25 88 Q58 88 58 112 Q58 140 25 140 M80 20 L80 140"/>
+    <path class="glyph-ink"   d="M25 20 L25 88 Q58 88 58 112 Q58 140 25 140 M80 20 L80 140"/>
+    <g class="pencil" style="offset-path:path('M25 20 L25 88 Q58 88 58 112 Q58 140 25 140 M80 20 L80 140')">
+      <rect class="pencil-body"  x="-11" y="-3" width="16" height="6" rx="1.5"/>
+      <rect class="pencil-grip"  x="-3"  y="-3" width="3"  height="6"/>
+      <path class="pencil-tip"   d="M5 -3 L14 0 L5 3 Z"/>
+      <circle class="pencil-point" cx="13.2" cy="0" r="1"/>
+    </g>
+  </g>
+
+  <!-- М -->
+  <g class="letter" tabindex="0" aria-label="Буква М" transform="translate(480,0)">
+    <rect class="hit" x="0" y="0" width="100" height="160"/>
+    <path class="glyph-ghost" d="M20 140 L20 20 L50 90 L80 20 L80 140"/>
+    <path class="glyph-ink"   d="M20 140 L20 20 L50 90 L80 20 L80 140"/>
+    <g class="pencil" style="offset-path:path('M20 140 L20 20 L50 90 L80 20 L80 140')">
+      <rect class="pencil-body"  x="-11" y="-3" width="16" height="6" rx="1.5"/>
+      <rect class="pencil-grip"  x="-3"  y="-3" width="3"  height="6"/>
+      <path class="pencil-tip"   d="M5 -3 L14 0 L5 3 Z"/>
+      <circle class="pencil-point" cx="13.2" cy="0" r="1"/>
+    </g>
+  </g>
+
+  
+</svg>
+</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="sitenav">Меню</button>
+    <nav class="sitenav" id="sitenav" aria-label="Разделы сайта">
+      <a href="index.html">Главная</a>
+      <a href="calculator.html" class="active" aria-current="page">Калькулятор</a>
+      <a href="about.html">О компании</a>
+      <a href="fsi.html">Поддержка ФСИ</a>
+      <a href="news.html">Новости</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+    <div class="nav-cta"><a class="btn btn-navy" href="calculator.html">Рассчитать стык</a></div>
   </div>
 </header>
-
 <main>
+<section class="page-hero bleed"><div class="wrap">
+  <div class="crumbs"><a href="index.html">Главная</a> / Калькулятор</div>
+  <h1>Калькулятор стыка платформенных панелей</h1>
+  <p>Калькулятор сделан для расчёта одностороннего платформенного стыка железобетонных стеновых панелей с плитой перекрытия. Для иных расчётов свяжитесь с нами напрямую — ответим в рабочие дни.</p>
+  <div class="btn-row" style="margin-top:26px;"><a class="btn btn-accent" href="#contacts">Оставить заявку</a></div>
+</div></section>
+
+<section class="block">
   <div class="wrap">
-    <h1>Прочность платформенного стыка</h1>
-    <p class="lede">Расчёт по формулам приложения Б СП 63.13330 для одностороннего платформенного стыка плиты перекрытия со стеновыми панелями. Коэффициент <code>ηs</code> (усиление опорных площадок за счёт армирования) подтягивается из калибровочной таблицы, которую ведёт администратор проекта — см. <code>coefficients.json</code>.</p>
+    <details class="dd" id="description">
+  <summary><span class="meta">Описание</span><span class="ttl">Как устроен калькулятор и что к чему относится</span></summary>
+  <div class="dd-body">
+    <ol class="howto-list">
+      <li><span><b>Выберите режим:</b> «Несущая способность» — прочность стыка при заданных параметрах; «Подбор армирования» — минимальный процент армирования под требуемую нагрузку.</span></li>
+      <li><span><b>Задайте параметры</b> — на схеме ниже показано, к какому элементу стыка относится каждое поле. Наведите на элемент или кликните поле калькулятора.</span></li>
+      <li><span><b>Получите результат</b> — длительную несущую способность Nj в тс/м (или минимальное армирование) — и при необходимости отправьте расчёт нам на проверку.</span></li>
+    </ol>
+    <div class="scheme-wrap">
+  <div class="scheme">
+    <svg viewBox="0 0 560 440" role="img" aria-label="Схема одностороннего платформенного стыка с обозначением параметров калькулятора">
+      <defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="#C9D1D6" stroke-width="1"/></pattern></defs>
+      <line x1="200" y1="8" x2="200" y2="410" stroke="#97A0A6" stroke-dasharray="14 4 2 4" stroke-width="1"/>
 
-    <div class="tabs" role="tablist">
-      <button class="tab-btn active" data-tab="select" role="tab" aria-selected="true">Исходные данные — подбор армирования</button>
-      <button class="tab-btn" data-tab="factors" role="tab" aria-selected="false">Факторы, влияющие на расчёт</button>
-    </div>
+      <g class="j-layer" data-parts="load" tabindex="0" role="button" aria-label="Нагрузка и эксцентриситет">
+        <line class="shape" x1="216" y1="8" x2="216" y2="42" stroke="#12B4C4" stroke-width="2"/>
+        <polygon points="216,48 210,36 222,36" fill="#12B4C4"/>
+        <path d="M200 28H216" stroke="#12B4C4" stroke-width="1"/>
+        <text x="226" y="22" font-family="JetBrains Mono, monospace" font-size="12" fill="#12B4C4">N</text>
+        <text x="226" y="38" font-family="JetBrains Mono, monospace" font-size="11" fill="#12B4C4">e</text>
+      </g>
 
-    <!-- TAB 1: подбор оптимального процента армирования -->
-    <section class="tab-panel active" id="tab-select">
-      <div class="section-label">Геометрия и материалы</div>
-      <div class="form-grid">
-        <div class="field"><label>Толщина стеновой панели, t (мм)</label><input type="number" id="s_t" value="180"></div>
-        <div class="field"><label>Ширина простенка / стыка, dj (мм)</label><input type="number" id="s_dj" value="1000"></div>
-        <div class="field"><label>Класс бетона стеновой панели</label><select id="s_classWall"></select></div>
-        <div class="field"><label>Класс бетона плиты перекрытия</label><select id="s_classPlate"></select></div>
-      </div>
+      <g class="j-layer" data-parts="wall" tabindex="0" role="button" aria-label="Верхняя стеновая панель">
+        <rect class="shape fillable" x="152" y="50" width="96" height="112" fill="url(#hatch)" stroke="#23282D" stroke-width="1.5"/>
+        <text x="30" y="98" font-family="Space Grotesk, sans-serif" font-weight="600" font-size="14" fill="#23282D">ВСП</text>
+        <text x="30" y="116" font-family="JetBrains Mono, monospace" font-size="10" fill="#12B4C4">B · t · μ</text>
+      </g>
 
-      <div class="section-label">Шов</div>
-      <div class="form-grid">
-        <div class="field"><label>Прочность раствора шва Rm (МПа)</label><input type="number" id="s_Rm" value="10"></div>
-        <div class="field"><label>Номинальная толщина шва (мм)</label><input type="number" id="s_tmnom" value="20"></div>
-        <div class="field"><label>Номинальная ширина шва bj (мм)</label><input type="number" id="s_bj" value="170"></div>
-        <div class="field"><label>Смещения δw / δp (мм)</label>
-          <div style="display:flex; gap:8px;">
-            <input type="number" id="s_deltaW" value="10" style="width:50%;">
-            <input type="number" id="s_deltaP" value="15" style="width:50%;">
-          </div>
-        </div>
-      </div>
+      <g class="j-layer" data-parts="incl" tabindex="0" role="button" aria-label="Включения">
+        <rect class="shape" x="166" y="120" width="30" height="30" fill="#fff" stroke="#B4541C" stroke-dasharray="4 3" stroke-width="1.5"/>
+        <path d="M198 136H262" stroke="#B4541C" stroke-width=".8"/>
+        <text x="266" y="139" font-family="JetBrains Mono, monospace" font-size="10" fill="#B4541C">включения</text>
+      </g>
 
-      <div class="section-label">Нагрузка и параметры подбора</div>
-      <div class="form-grid">
-        <div class="field"><label>Требуемая несущая способность стыка (тс/м)</label><input type="number" id="s_required" value="80"></div>
-        <div class="field"><label>Тип включений</label><select id="s_inclusion"></select></div>
-        <div class="field"><label>Эксцентриситет нагрузки (мм)</label><input type="number" id="s_ecc" value="0"></div>
-        <div class="field"><label>Макс. % армирования для перебора</label><input type="number" id="s_maxArm" value="6" step="0.1"></div>
-      </div>
+      <g class="j-layer" data-parts="seam" tabindex="0" role="button" aria-label="Растворные швы">
+        <rect class="shape" x="152" y="162" width="96" height="10" fill="#8E99A1" stroke="#23282D" stroke-width="1"/>
+        <rect class="shape" x="152" y="266" width="96" height="10" fill="#8E99A1" stroke="#23282D" stroke-width="1"/>
+        <text x="30" y="171" font-family="JetBrains Mono, monospace" font-size="10" fill="#23282D">шов</text>
+        <text x="62" y="171" font-family="JetBrains Mono, monospace" font-size="10" fill="#12B4C4">Rm · tш · bj</text>
+        <text x="30" y="275" font-family="JetBrains Mono, monospace" font-size="10" fill="#23282D">шов</text>
+      </g>
 
-      <button class="run-btn" id="s_run">Подобрать минимальный % армирования</button>
-      <div class="result-panel" id="s_result"></div>
-    </section>
+      <g class="j-layer" data-parts="slab" tabindex="0" role="button" aria-label="Плита перекрытия">
+        <path class="shape fillable" d="M152 172H520 L510 196 L530 220 L520 266 H152Z" fill="#EEF2F3" stroke="#23282D" stroke-width="1.5"/>
+        <text x="320" y="216" font-family="Space Grotesk, sans-serif" font-weight="600" font-size="14" fill="#23282D">ПЛИТА ПЕРЕКРЫТИЯ</text>
+        <text x="320" y="236" font-family="JetBrains Mono, monospace" font-size="10" fill="#12B4C4">B плиты</text>
+      </g>
 
-    <!-- TAB 2: факторы, прямой расчёт -->
-    <section class="tab-panel" id="tab-factors">
-      <div class="section-label">Геометрия и материалы</div>
-      <div class="form-grid">
-        <div class="field"><label>Толщина стеновой панели, t (мм)</label><input type="number" id="f_t" value="180"></div>
-        <div class="field"><label>Ширина простенка / стыка, dj (мм)</label><input type="number" id="f_dj" value="1000"></div>
-        <div class="field"><label>Класс бетона стеновой панели (марка плиты*)</label><select id="f_classWall"></select></div>
-        <div class="field"><label>Класс бетона плиты перекрытия</label><select id="f_classPlate"></select></div>
-      </div>
+      <g aria-hidden="true">
+        <g stroke="#142A45" stroke-width="1.4"><line x1="330" y1="140" x2="330" y2="166"/><line x1="390" y1="140" x2="390" y2="166"/><line x1="450" y1="140" x2="450" y2="166"/></g>
+        <g fill="#142A45"><polygon points="330,170 326,162 334,162"/><polygon points="390,170 386,162 394,162"/><polygon points="450,170 446,162 454,162"/></g>
+      </g>
 
-      <div class="section-label">Шов</div>
-      <div class="form-grid">
-        <div class="field"><label>Марка (прочность) раствора шва Rm, МПа</label><input type="number" id="f_Rm" value="10"></div>
-        <div class="field"><label>Толщина шва (мм)</label><input type="number" id="f_tmnom" value="20"></div>
-        <div class="field"><label>Номинальная ширина шва bj (мм)</label><input type="number" id="f_bj" value="170"></div>
-        <div class="field"><label>Смещения δw / δp (мм)</label>
-          <div style="display:flex; gap:8px;">
-            <input type="number" id="f_deltaW" value="10" style="width:50%;">
-            <input type="number" id="f_deltaP" value="15" style="width:50%;">
-          </div>
-        </div>
-      </div>
+      <g class="j-layer" data-parts="wall" tabindex="0" role="button" aria-label="Нижняя стеновая панель">
+        <rect class="shape fillable" x="152" y="276" width="96" height="120" fill="url(#hatch)" stroke="#23282D" stroke-width="1.5"/>
+        <text x="30" y="336" font-family="Space Grotesk, sans-serif" font-weight="600" font-size="14" fill="#23282D">НСП</text>
+        <text x="30" y="354" font-family="JetBrains Mono, monospace" font-size="10" fill="#12B4C4">B · t · μ</text>
+      </g>
 
-      <div class="section-label">Факторы, влияющие на ηs</div>
-      <div class="form-grid">
-        <div class="field"><label>Процент армирования, %</label><input type="number" id="f_arm" value="1.0" step="0.1"></div>
-        <div class="field"><label>Тип включений</label><select id="f_inclusion"></select></div>
-        <div class="field"><label>Эксцентриситет нагрузки (мм)</label><input type="number" id="f_ecc" value="0"></div>
-      </div>
+      <g class="j-layer" data-parts="shift" tabindex="0" role="button" aria-label="Монтажные смещения">
+        <path class="shape" d="M248 286H272 M248 286l6-3v6z M272 286l-6-3v6z" stroke="#142A45" stroke-width="1.2" fill="#142A45"/>
+        <text x="278" y="290" font-family="JetBrains Mono, monospace" font-size="10" fill="#12B4C4">δw / δp</text>
+      </g>
 
-      <button class="run-btn" id="f_run">Рассчитать</button>
-      <div class="result-panel" id="f_result"></div>
-    </section>
+      <g class="j-layer" data-parts="anchor" tabindex="0" role="button" aria-label="Анкерный узел">
+        <line class="shape" x1="200" y1="388" x2="200" y2="226" stroke="#5F676E" stroke-width="2.2"/>
+        <circle class="shape" cx="200" cy="219" r="9" fill="none" stroke="#5F676E" stroke-width="2"/>
+        <rect class="shape" x="184" y="206" width="32" height="5" fill="#5F676E" stroke="#5F676E"/>
+        <path d="M203 330H262" stroke="#5F676E" stroke-width=".8"/>
+        <text x="266" y="334" font-family="JetBrains Mono, monospace" font-size="10" fill="#5F676E">анкерный узел</text>
+      </g>
 
-    <p class="lede" style="margin-top:40px; font-size:13px;">γb1=0.9, γb2=0.9, γb3=0.85 приняты по расчётному листу проекта как фиксированные — если нужно сделать их редактируемыми, скажите отдельно.</p>
+      <g class="j-layer" data-parts="wall" tabindex="0" role="button" aria-label="Толщина панели">
+        <path class="shape" d="M152 404V416 M248 404V416 M152 410H248" stroke="#12B4C4" stroke-width="1.2" fill="none"/>
+        <text x="196" y="430" font-family="JetBrains Mono, monospace" font-size="11" fill="#12B4C4">t</text>
+        <text x="300" y="430" font-family="JetBrains Mono, monospace" font-size="10" fill="#5F676E">dj — длина стыка вдоль стены (⟂ разрезу)</text>
+      </g>
+    </svg>
   </div>
+  <ul class="legend" aria-label="Что к чему относится">
+    <li data-part="wall" tabindex="0"><b>Стеновые панели ВСП / НСП</b><span class="chips"><i>t</i><i>dj</i><i>бетон стены</i><i>армирование</i></span><span class="desc">Толщина панели, длина стыка вдоль стены, класс бетона и процент армирования.</span></li>
+    <li data-part="slab" tabindex="0"><b>Плита перекрытия</b><span class="chips"><i>бетон плиты</i></span><span class="desc">Опирается на стену с одной стороны. Если бетон плиты слабее бетона стены, прочность стыка снижается.</span></li>
+    <li data-part="seam" tabindex="0"><b>Растворные швы</b><span class="chips"><i>Rm</i><i>толщина шва</i><i>bj</i></span><span class="desc">Швы над и под плитой: прочность раствора, толщина и ширина шва.</span></li>
+    <li data-part="shift" tabindex="0"><b>Монтажные смещения</b><span class="chips"><i>δw</i><i>δp</i></span><span class="desc">Смещения стеновой панели и плиты при монтаже — уменьшают площадку опирания.</span></li>
+    <li data-part="incl" tabindex="0"><b>Включения</b><span class="chips"><i>эл. коробки</i></span><span class="desc">Коробки в зоне стыка уменьшают площадь контакта.</span></li>
+    <li data-part="load" tabindex="0"><b>Нагрузка</b><span class="chips"><i>e</i><i>требуемая N</i></span><span class="desc">Вертикальная нагрузка и её эксцентриситет относительно оси стены.</span></li>
+    <li data-part="anchor" tabindex="0"><b>Анкерный узел</b><span class="chips"><i class="off">не задаётся</i></span><span class="desc">Анкер Ø16 с проушиной и закладными. Исследуется в численной модели, в калькулятор будет добавлен по её результатам.</span></li>
+  </ul>
+</div>
+    <div class="base-note">Расчёт — по формулам прил. Б СП 63.13330 для одностороннего платформенного стыка. γb1 = 0,9; γb2 = 0,9; γb3 = 0,85. Поправка ηs на армирование уточняется по результатам численных серий; сейчас ηs = 1,0.</div></div>
+</details>
+    <div style="margin-top:22px;"><div class="calc-shell" id="calcShell">
+  <form class="calc-form" onsubmit="return false;" aria-label="Калькулятор стыка платформенных панелей">
+    <div class="mode-switch" role="radiogroup" aria-label="Режим расчёта">
+      <label><input type="radio" name="c_mode" value="direct" checked><span>Несущая способность</span></label>
+      <label><input type="radio" name="c_mode" value="select"><span>Подбор армирования</span></label>
+    </div>
+    <div class="group-label">Панели и плита</div>
+    <div class="form-grid">
+      <div class="field" data-part="wall"><label for="c_classWall">Бетон стеновой панели</label><select id="c_classWall"></select></div>
+      <div class="field" data-part="slab"><label for="c_classPlate">Бетон плиты перекрытия</label><select id="c_classPlate"></select></div>
+      <div class="field" data-part="wall"><label for="c_t">Толщина панели t, мм</label><input type="number" id="c_t" value="180" min="1"></div>
+      <div class="field" data-part="wall"><label for="c_dj">Длина стыка dj, мм</label><input type="number" id="c_dj" value="1000" min="1"></div>
+    </div>
+    <div class="group-label">Растворный шов</div>
+    <div class="form-grid">
+      <div class="field" data-part="seam"><label for="c_Rm">Прочность раствора Rm, МПа</label><input type="number" id="c_Rm" value="10" min="0"></div>
+      <div class="field" data-part="seam"><label for="c_tmnom">Толщина шва, мм</label><input type="number" id="c_tmnom" value="20" min="1"></div>
+      <div class="field" data-part="seam"><label for="c_bj">Ширина шва bj, мм</label><input type="number" id="c_bj" value="170" min="1"></div>
+      <div class="field" data-part="shift"><label for="c_deltaW">Смещения δw / δp, мм</label><div class="pair"><input type="number" id="c_deltaW" value="10" aria-label="δw"><input type="number" id="c_deltaP" value="15" aria-label="δp"></div></div>
+    </div>
+    <div class="group-label">Факторы стыка</div>
+    <div class="form-grid three">
+      <div class="field mode-direct" data-part="wall"><label for="c_arm">Армирование, %</label><input type="number" id="c_arm" value="1.0" step="0.1" min="0"></div>
+      <div class="field mode-select" data-part="load" hidden><label for="c_required">Требуемая N, тс/м</label><input type="number" id="c_required" value="80" min="0"></div>
+      <div class="field mode-select" data-part="wall" hidden><label for="c_maxArm">Макс. армирование, %</label><input type="number" id="c_maxArm" value="6" step="0.1" min="0"></div>
+      <div class="field" data-part="incl"><label for="c_inclusion">Включения</label><select id="c_inclusion"></select></div>
+      <div class="field" data-part="load"><label for="c_ecc">Эксцентриситет e, мм</label><input type="number" id="c_ecc" value="0"></div>
+    </div>
+    <button class="btn btn-navy" id="c_run" type="button">Рассчитать стык</button>
+  </form>
+  <aside class="calc-side" id="c_side" aria-live="polite">
+    <div>
+      <div class="label" id="c_outLabel">Длительная несущая способность Nj</div>
+      <div class="big-result" id="c_out">—</div>
+    </div>
+    <div class="side-grid" id="c_grid"></div>
+    <div class="side-note" id="c_note"></div>
+    <div class="side-actions">
+      <a class="btn btn-accent" id="c_mail" href="mailto:info.ahmet@yandex.ru">Отправить расчёт на проверку</a>
+    </div>
+  </aside>
+</div></div>
+  </div>
+</section>
+
+<section class="block white">
+  <div class="wrap">
+    <div class="section-head"><h2>Методика расчёта</h2></div>
+    <details class="dd" id="formula">
+  <summary><span class="meta">Методика</span><span class="ttl">Целевая функция</span></summary>
+  <div class="dd-body">
+    <div class="formula-panel">
+      <div class="formula">N = R · A<sub>eff</sub> · <span class="acc">φ</span></div>
+      <div class="formula-terms">
+        <div><b>R</b>расчётное сопротивление бетона (по классу)</div>
+        <div><b>A_eff</b>эффективная площадь контакта за вычетом включений</div>
+        <div><b>φ</b>коэффициент условий работы стыка: φ = N<sub>ansys</sub> / (R·A), по результатам каждой серии</div>
+      </div>
+    </div>
+    <p>По сериям численных расчётов оценивается зависимость φ от варьируемых факторов — она ложится в основу методики.</p></div>
+</details><details class="dd" id="factors">
+  <summary><span class="meta">Методика</span><span class="ttl">Факторы и серии расчётов</span></summary>
+  <div class="dd-body">
+    <div class="table-scroll"><table>
+      <thead><tr><th>№</th><th>Фактор</th><th>Уровни</th><th>Влияние</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td class="factor">Класс бетона панелей</td><td>В20, В25, В30</td><td>R и φ</td></tr>
+        <tr><td>2</td><td class="factor">Включения (эл. коробки)</td><td>Нет / на НСП / на ВСП / на обеих</td><td>Уменьшают A_eff</td></tr>
+        <tr><td>3</td><td class="factor">Армирование стен</td><td>Минимальное (каркасы) → нормативное (сетки)</td><td>Изменение μ</td></tr>
+        <tr><td>4</td><td class="factor">Эксцентриситет нагрузки</td><td>e = 0, e₁ (малый), e₂ (расчётный)</td><td>Дополнительный момент</td></tr>
+        <tr><td>5</td><td class="factor">Толщина шва</td><td>10 / 15 / 20 мм</td><td>Деформативность шва</td></tr>
+        <tr><td>6</td><td class="factor">Класс раствора шва</td><td>М50 / М100 / М150</td><td>Совместно с фактором 5</td></tr>
+      </tbody>
+    </table></div>
+    <div class="base-note"><b>Базовая серия:</b> без включений, В25, шов 10 мм, раствор М100, e = 0. Каждый фактор варьируется при фиксированных остальных; дополнительно — совместные комбинации 5+6 и 1+2.</div></div>
+</details><details class="dd" id="model">
+  <summary><span class="meta">Методика</span><span class="ttl">Расчётная 3D-модель</span></summary>
+  <div class="dd-body">
+    <p>Модель состоит из трёх тел: нижней стеновой панели с анкерным выпуском, плиты перекрытия с закладной ЗД-22/А и верхней стеновой панели с закладной ЗД-15/А. Геометрия — AutoCAD, расчёт — МКЭ в ANSYS Mechanical.</p>
+    <div class="dims">
+      <div><span>ВСП / НСП</span><span>1810 × 800 × 160 мм</span></div>
+      <div><span>Плита перекрытия</span><span>1810 × 1500 × 160 мм</span></div>
+      <div><span>Анкерный выпуск</span><span>Ø16 мм, В500С</span></div>
+      <div><span>Проушина</span><span>Ø12, 180°, R20</span></div>
+      <div><span>Нагрузка на перекрытие</span><span>250 кг/м²</span></div>
+    </div></div>
+</details><details class="dd" id="workflow">
+  <summary><span class="meta">Методика</span><span class="ttl">Ход работ</span></summary>
+  <div class="dd-body">
+    <div class="steps">
+      <div class="step"><div><h3>Базовая модель</h3><p>Построение и верификация по аналитическому решению или натурному испытанию.</p></div></div>
+      <div class="step"><div><h3>Серии расчётов</h3><p>Прогон по каждому фактору, не менее трёх точек на фактор.</p></div></div>
+      <div class="step"><div><h3>Извлечение данных</h3><p>Напряжения в бетоне шва, анкере и закладных; перемещения плиты; усилие трещинообразования.</p></div></div>
+      <div class="step"><div><h3>Вычисление φ</h3><p>Коэффициент условий работы и график φ = f(фактор) для каждой серии.</p></div></div>
+      <div class="step"><div><h3>Аппроксимация</h3><p>Сводная таблица и регрессионные зависимости.</p></div></div>
+      <div class="step"><div><h3>Комбинированные случаи</h3><p>Проверка неблагоприятных сочетаний факторов.</p></div></div>
+      <div class="step"><div><h3>Рекомендации</h3><p>Рекомендации по конструированию стыка на основе полученных зависимостей.</p></div></div>
+    </div></div>
+</details>
+  </div>
+</section>
+
+<section class="block" id="contacts">
+  <div class="wrap split">
+    <div>
+      <div class="section-head"><h2>Контакты</h2></div>
+      <p class="lead">Нужен расчёт другого узла или заключение по вашему проекту? Напишите — ответим в рабочие дни.</p>
+      <div class="contact-grid" style="grid-template-columns:1fr;">
+        <div class="contact-item"><div class="label">Email</div><a href="mailto:info.ahmet@yandex.ru">info.ahmet@yandex.ru</a></div>
+        <div class="contact-item"><div class="label">Организация</div><div class="value">ООО «СЫЗЫМ»</div></div>
+      </div>
+    </div>
+    <div class="request-form" id="request">
+      <h3 style="margin-bottom:16px; font-size:20px;">Оставить заявку</h3>
+      <form id="requestForm" data-email="info.ahmet@yandex.ru">
+        <div class="form-grid">
+          <div class="field"><label for="r_name">Имя</label><input id="r_name" name="name" required></div>
+          <div class="field"><label for="r_org">Организация</label><input id="r_org" name="org"></div>
+          <div class="field"><label for="r_contact">Телефон или e-mail</label><input id="r_contact" name="contact" required></div>
+          <div class="field"><label for="r_topic">Тема</label><select id="r_topic" name="topic"><option>Расчёт стыка</option><option>Сотрудничество</option><option>Вопрос по проекту</option></select></div>
+        </div>
+        <div class="field" style="margin-top:16px;"><label for="r_msg">Сообщение</label><textarea id="r_msg" name="message" placeholder="Опишите узел: панели, плита, шов, нагрузка"></textarea></div>
+        <button class="btn btn-navy" type="submit" style="margin-top:18px;">Отправить заявку</button>
+        <p class="form-hint">Заявка откроется в вашем почтовом клиенте — останется нажать «Отправить».</p>
+      </form>
+    </div>
+  </div>
+</section>
 </main>
 
-<footer>
-  <div class="wrap footer-row">ООО «СЫЗЫМ» · калькулятор основан на прил. Б СП 63.13330</div>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="col">
+      <b>ООО «СЫЗЫМ»</b>
+      <span>Разработка методики расчёта стыков железобетонных стеновых панелей.</span>
+      <a class="fsi-mini" href="fsi.html" aria-label="Поддержка Фонда содействия инновациям"><img src="fasie-logo.png" alt="Фонд содействия инновациям"></a>
+    </div>
+    <div class="col">
+      <b>Разделы</b>
+      <a href="index.html">Главная</a><a href="calculator.html">Калькулятор</a><a href="about.html">О компании</a><a href="fsi.html">Поддержка ФСИ</a><a href="news.html">Новости</a><a href="contacts.html">Контакты</a>
+    </div>
+    <div class="col">
+      <b>Связаться</b>
+      <a href="mailto:info.ahmet@yandex.ru">info.ahmet@yandex.ru</a>
+      <a href="contacts.html#request">Оставить заявку →</a>
+      <a href="calculator.html">Рассчитать стык →</a>
+    </div>
+  </div>
+  <div class="footer-bottom"><div class="wrap"><span>© 2026 ООО «СЫЗЫМ»</span><span>При поддержке Фонда содействия инновациям · fasie.ru</span></div></div>
 </footer>
-
-<script>
-(function(){
-  // ---------- Concrete class → Rb (МПа), из листа "материалы" ----------
-  var RB_TABLE = {
-    'B1.5':0,'B2':0,'B2.5':0,'B3.5':2.1,'B5':2.8,'B7.5':4.5,'B10':6,'B12.5':7.5,
-    'B15':8.5,'B20':11.5,'B25':14.5,'B30':17,'B35':19.5,'B40':22,'B45':25,'B50':27.5,
-    'B55':30,'B60':33,'B70':37,'B80':41,'B90':44,'B100':47.5
-  };
-  var GAMMA_BI = 0.9 * 0.9 * 0.85; // γb1*γb2*γb3, фиксировано по расчётному листу проекта
-
-  function classNumeric(cls){ return parseFloat(cls.replace('B','')); }
-
-  function populateClassSelect(sel, def){
-    Object.keys(RB_TABLE).forEach(function(c){
-      var o = document.createElement('option');
-      o.value = c; o.textContent = c;
-      if (c === def) o.selected = true;
-      sel.appendChild(o);
-    });
-  }
-
-  var INCLUSION_TYPES = ['без включений','эл. коробка на НСП','эл. коробка на ВСП','эл. коробки на обеих панелях'];
-  function populateInclusionSelect(sel){
-    INCLUSION_TYPES.forEach(function(t){
-      var o = document.createElement('option'); o.value = t; o.textContent = t; sel.appendChild(o);
-    });
-  }
-
-  ['s_classWall','f_classWall'].forEach(function(id){ populateClassSelect(document.getElementById(id), 'B25'); });
-  ['s_classPlate','f_classPlate'].forEach(function(id){ populateClassSelect(document.getElementById(id), 'B20'); });
-  ['s_inclusion','f_inclusion'].forEach(function(id){ populateInclusionSelect(document.getElementById(id)); });
-
-  // ---------- Coefficients table (ηs), loaded from coefficients.json ----------
-  var coeffData = { rows: [] };
-  fetch('coefficients.json').then(function(r){ return r.json(); }).then(function(d){
-    coeffData = d;
-  }).catch(function(){
-    console.warn('coefficients.json не найден или недоступен — используется базовое значение ηs=1.0');
-  });
-
-  // Inverse-distance-weighted lookup of ηs over (armPercent, eccentricity) within a matching inclusionType
-  function lookupEtaS(armPercent, inclusionType, eccentricity){
-    var rows = (coeffData && coeffData.rows) || [];
-    if (!rows.length) {
-      return { value: 1.0, sourceCount: 0, exact: false, empty: true };
-    }
-    var pool = rows.filter(function(r){ return r.inclusionType === inclusionType; });
-    var usedFallbackType = false;
-    if (!pool.length) { pool = rows; usedFallbackType = true; }
-
-    var exact = pool.find(function(r){
-      return Math.abs(r.armPercent - armPercent) < 1e-9 && Math.abs(r.eccentricity - eccentricity) < 1e-9;
-    });
-    if (exact) return { value: exact.coefficient, sourceCount: 1, exact: true, usedFallbackType: usedFallbackType };
-
-    var wSum = 0, vSum = 0;
-    pool.forEach(function(r){
-      var dArm = r.armPercent - armPercent;
-      var dEcc = r.eccentricity - eccentricity;
-      var dist = Math.sqrt(dArm*dArm + dEcc*dEcc) || 1e-6;
-      var w = 1 / (dist*dist);
-      wSum += w; vSum += w * r.coefficient;
-    });
-    return { value: vSum / wSum, sourceCount: pool.length, exact: false, usedFallbackType: usedFallbackType };
-  }
-
-  // ---------- Core formula: прил. Б СП 63.13330, платформенный односторонний стык ----------
-  function computeJoint(p){
-    var RbWall = RB_TABLE[p.classWall];
-    var RbPlate = RB_TABLE[p.classPlate];
-    var RbwGamma = RbWall * GAMMA_BI;
-    var RbpGamma = RbPlate * GAMMA_BI;
-    var Bw = classNumeric(p.classWall);
-
-    var tm = 1.4 * p.tmnom;
-    var deltaPl = Math.sqrt(p.deltaP*p.deltaP + p.deltaW*p.deltaW);
-    var bm = p.bj - deltaPl;
-    var etaM = 1 - (2 - tm/bm) * (tm/bm) / (1 + 2*p.Rm/Bw);
-    var etaPl = (RbpGamma < RbwGamma) ? (1 - Math.pow(1 - RbpGamma/RbwGamma, 2)) : 1;
-    var gammaPl = 1.0; // односторонний платформенный стык
-    var bpl = p.bj;    // для одностороннего платформенного стыка bpl=bj
-    var etaJ = (bpl - deltaPl) * gammaPl * etaPl / p.t;
-
-    var Rc = RbwGamma * etaM * etaJ * p.etaS;
-    var NjN = Rc * p.t * p.dj;          // Н
-    var NjLongN = 0.9 * NjN;            // Н, длительная
-    var NjLong_tPerM = (NjLongN / (p.dj/1000)) / 9806.65; // тс/м
-
-    return { RbwGamma:RbwGamma, RbpGamma:RbpGamma, etaM:etaM, etaPl:etaPl, etaJ:etaJ, Rc:Rc, NjN:NjN, NjLongN:NjLongN, NjLong_tPerM:NjLong_tPerM };
-  }
-
-  function fmt(n, d){ return Number(n).toLocaleString('ru-RU', { maximumFractionDigits: d===undefined?3:d }); }
-
-  function etaNoteHTML(look){
-    if (look.empty) {
-      return '<div class="note-box empty">Таблица коэффициентов пуста — используется базовое ηs = 1.0 (без учёта армирования). Калибровочные коэффициенты не заданы.</div>';
-    }
-    var cls = (look.value < 1 || look.value > 1.3) ? 'warn' : '';
-    var msg = look.exact
-      ? 'Точное совпадение с калибровочной точкой (1 запись).'
-      : 'Интерполяция по ближайшим калибровочным точкам (' + look.sourceCount + ' шт., метод IDW).';
-    if (look.usedFallbackType) msg += ' Записей для этого типа включений нет — использованы все записи таблицы.';
-    if (look.value < 1 || look.value > 1.3) msg += ' Внимание: значение вне диапазона ηs=1.0–1.3, допустимого по СП 63.13330.';
-    return '<div class="note-box ' + cls + '">ηs = ' + fmt(look.value,4) + '. ' + msg + '</div>';
-  }
-
-  // ---------- Tab 1: подбор % армирования ----------
-  document.getElementById('s_run').addEventListener('click', function(){
-    var base = {
-      t: parseFloat(document.getElementById('s_t').value),
-      dj: parseFloat(document.getElementById('s_dj').value),
-      classWall: document.getElementById('s_classWall').value,
-      classPlate: document.getElementById('s_classPlate').value,
-      Rm: parseFloat(document.getElementById('s_Rm').value),
-      tmnom: parseFloat(document.getElementById('s_tmnom').value),
-      bj: parseFloat(document.getElementById('s_bj').value),
-      deltaW: parseFloat(document.getElementById('s_deltaW').value),
-      deltaP: parseFloat(document.getElementById('s_deltaP').value)
-    };
-    var required = parseFloat(document.getElementById('s_required').value);
-    var inclusion = document.getElementById('s_inclusion').value;
-    var ecc = parseFloat(document.getElementById('s_ecc').value);
-    var maxArm = parseFloat(document.getElementById('s_maxArm').value);
-
-    var step = 0.05, found = null, lastResult = null, lastLook = null;
-    for (var arm = 0; arm <= maxArm + 1e-9; arm += step) {
-      var look = lookupEtaS(arm, inclusion, ecc);
-      var res = computeJoint(Object.assign({}, base, { etaS: look.value }));
-      lastResult = res; lastLook = look;
-      if (res.NjLong_tPerM >= required) { found = { arm: arm, res: res, look: look }; break; }
-    }
-
-    var panel = document.getElementById('s_result');
-    panel.classList.add('show');
-    if (found) {
-      panel.innerHTML =
-        '<div class="result-headline">Минимальный % армирования: ' + fmt(found.arm,2) + '%</div>' +
-        '<div class="result-sub">Обеспечивает требуемую несущую способность ' + fmt(required,1) + ' тс/м</div>' +
-        '<div class="result-grid">' +
-          '<div class="result-item"><div class="label">Rc</div><div class="value">' + fmt(found.res.Rc,3) + ' МПа</div></div>' +
-          '<div class="result-item"><div class="label">Nj (мгновенная)</div><div class="value">' + fmt(found.res.NjN/1000,1) + ' кН</div></div>' +
-          '<div class="result-item"><div class="label">Nj (длительная)</div><div class="value pass">' + fmt(found.res.NjLong_tPerM,2) + ' тс/м</div></div>' +
-          '<div class="result-item"><div class="label">ηs использован</div><div class="value">' + fmt(found.look.value,4) + '</div></div>' +
-        '</div>' + etaNoteHTML(found.look);
-    } else {
-      panel.innerHTML =
-        '<div class="result-headline">Требуемая несущая способность не достигнута</div>' +
-        '<div class="result-sub">В переборе до ' + fmt(maxArm,1) + '% армирования максимум составил ' + fmt(lastResult.NjLong_tPerM,2) + ' тс/м — этого недостаточно для ' + fmt(required,1) + ' тс/м. Увеличьте диапазон перебора, толщину стыка dj/t, либо марку бетона.</div>' +
-        etaNoteHTML(lastLook);
-    }
-  });
-
-  // ---------- Tab 2: прямой расчёт по факторам ----------
-  document.getElementById('f_run').addEventListener('click', function(){
-    var arm = parseFloat(document.getElementById('f_arm').value);
-    var inclusion = document.getElementById('f_inclusion').value;
-    var ecc = parseFloat(document.getElementById('f_ecc').value);
-    var look = lookupEtaS(arm, inclusion, ecc);
-
-    var base = {
-      t: parseFloat(document.getElementById('f_t').value),
-      dj: parseFloat(document.getElementById('f_dj').value),
-      classWall: document.getElementById('f_classWall').value,
-      classPlate: document.getElementById('f_classPlate').value,
-      Rm: parseFloat(document.getElementById('f_Rm').value),
-      tmnom: parseFloat(document.getElementById('f_tmnom').value),
-      bj: parseFloat(document.getElementById('f_bj').value),
-      deltaW: parseFloat(document.getElementById('f_deltaW').value),
-      deltaP: parseFloat(document.getElementById('f_deltaP').value),
-      etaS: look.value
-    };
-    var res = computeJoint(base);
-
-    var panel = document.getElementById('f_result');
-    panel.classList.add('show');
-    panel.innerHTML =
-      '<div class="result-headline">Rc = ' + fmt(res.Rc,3) + ' МПа</div>' +
-      '<div class="result-sub">ηm=' + fmt(res.etaM,4) + ' · ηj=' + fmt(res.etaJ,4) + ' · ηpl=' + fmt(res.etaPl,4) + '</div>' +
-      '<div class="result-grid">' +
-        '<div class="result-item"><div class="label">Nj, мгновенная</div><div class="value">' + fmt(res.NjN/1000,1) + ' кН</div></div>' +
-        '<div class="result-item"><div class="label">Nj, длительная</div><div class="value">' + fmt(res.NjLongN/1000,1) + ' кН</div></div>' +
-        '<div class="result-item"><div class="label">Nj, длительная</div><div class="value">' + fmt(res.NjLong_tPerM,2) + ' тс/м</div></div>' +
-      '</div>' + etaNoteHTML(look);
-  });
-
-  // ---------- Tabs ----------
-  document.querySelectorAll('.tab-btn').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
-      document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
-      btn.classList.add('active'); btn.setAttribute('aria-selected','true');
-      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
-    });
-  });
-})();
-</script>
-
+<script src="calc.js"></script>
 </body>
 </html>
