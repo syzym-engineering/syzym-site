@@ -8,6 +8,8 @@
   };
   var GAMMA_BI = 0.9 * 0.9 * 0.85; // γb1·γb2·γb3
   var INCLUSION_TYPES = ['без включений','эл. коробка на НСП','эл. коробка на ВСП','эл. коробки на обеих панелях'];
+  // Отображаемые подписи (значения совпадают с coefficients.json)
+  var INCLUSION_LABELS = { 'без включений':'без включений', 'эл. коробка на НСП':'в нижней СП', 'эл. коробка на ВСП':'в верхней СП', 'эл. коробки на обеих панелях':'в обеих СП' };
   var EMAIL = 'info.ahmet@yandex.ru';
 
   function classNumeric(cls){ return parseFloat(cls.replace('B','')); }
@@ -25,7 +27,7 @@
   }
   function fillIncl(sel){
     if (!sel) return;
-    INCLUSION_TYPES.forEach(function(t){ var o = document.createElement('option'); o.value = t; o.textContent = t; sel.appendChild(o); });
+    INCLUSION_TYPES.forEach(function(t){ var o = document.createElement('option'); o.value = t; o.textContent = INCLUSION_LABELS[t] || t; sel.appendChild(o); });
   }
 
   var coeffData = { rows: [] };
@@ -122,7 +124,7 @@
         $('c_out').innerHTML = fmt(res.NjLong_tPerM,1) + '<small>тс/м</small>';
         $('c_grid').innerHTML = cell('Rc', fmt(res.Rc,2) + ' МПа') + cell('Nj, мгновенная', fmt(res.NjN/1000,0) + ' кН') + cell('ηm', fmt(res.etaM,3)) + cell('ηj', fmt(res.etaJ,3));
         $('c_note').textContent = etaNote(look);
-        $('c_mail').href = mailtoFor(base, 'Армирование: ' + arm + ' %, включения: ' + incl + ', e = ' + ecc + ' мм', res);
+        $('c_mail').href = mailtoFor(base, 'Армирование: ' + arm + ' %, включения: ' + (INCLUSION_LABELS[incl] || incl) + ', e = ' + ecc + ' мм', res);
       } else {
         var required = num('c_required'), maxArm = num('c_maxArm');
         if (!isFinite(required) || !isFinite(maxArm)) return;
@@ -138,7 +140,7 @@
           $('c_out').innerHTML = fmt(found.arm,2) + '<small>%</small>';
           $('c_grid').innerHTML = cell('Nj, длительная', fmt(found.res.NjLong_tPerM,1) + ' тс/м') + cell('Требуется', fmt(required,1) + ' тс/м') + cell('Rc', fmt(found.res.Rc,2) + ' МПа') + cell('ηs', fmt(found.look.value,3));
           $('c_note').textContent = etaNote(found.look);
-          $('c_mail').href = mailtoFor(base, 'Подбор армирования: требуемая N = ' + required + ' тс/м, найдено ' + fmt(found.arm,2) + ' %, включения: ' + incl + ', e = ' + ecc + ' мм', found.res);
+          $('c_mail').href = mailtoFor(base, 'Подбор армирования: требуемая N = ' + required + ' тс/м, найдено ' + fmt(found.arm,2) + ' %, включения: ' + (INCLUSION_LABELS[incl] || incl) + ', e = ' + ecc + ' мм', found.res);
         } else {
           $('c_out').innerHTML = 'не достигнута';
           $('c_grid').innerHTML = cell('Максимум', fmt(last.NjLong_tPerM,1) + ' тс/м') + cell('Требуется', fmt(required,1) + ' тс/м');
