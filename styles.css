@@ -381,3 +381,28 @@ footer.site-footer .fsi-mini img{ width:120px; display:block; }
 
 .scheme-wrap--img{ grid-template-columns:minmax(0,560px) minmax(260px,1fr); }
 @media (max-width:920px){ .scheme-wrap--img{ grid-template-columns:1fr; } .jsvg{ max-width:520px; margin:0 auto; } }
+
+/* ---------- Optional factors (checkbox cards) ---------- */
+.opt-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:16px; align-items:start; }
+@media (max-width:640px){ .opt-grid{ grid-template-columns:1fr; } }
+.field.opt{ border:1px solid #D5DADE; background:#fff; gap:0; transition:border-color .15s, background .15s; }
+.field.opt.on{ border-color:var(--navy); background:#FAFCFD; }
+.field.opt.linked{ border-color:var(--accent); }
+.opt-head{ display:grid !important; grid-template-columns:20px 1fr; column-gap:10px; row-gap:1px; align-items:center; padding:12px 14px; cursor:pointer; text-transform:none !important; }
+.opt-head input{ position:absolute; opacity:0; width:1px; height:1px; }
+.opt-head .box{ grid-row:span 2; width:18px; height:18px; border:1.5px solid var(--navy); background:#fff; position:relative; transition:background .15s; }
+.opt-head input:checked + .box{ background:var(--navy); }
+.opt-head input:checked + .box::after{ content:""; position:absolute; left:5px; top:1px; width:5px; height:10px; border:solid #fff; border-width:0 2px 2px 0; transform:rotate(45deg); }
+.opt-head input:focus-visible + .box{ outline:2px solid var(--accent); outline-offset:2px; }
+.opt-title{ font-family:var(--font-display); font-weight:600; font-size:14.5px; color:var(--ink); letter-spacing:0; }
+.opt-hint{ font-family:var(--font-body); font-size:12.5px; color:var(--ink-faint); letter-spacing:0; }
+.opt-body{ padding:2px 14px 14px; border-top:1px dashed var(--line); }
+.opt-body .form-grid{ margin-top:12px; grid-template-columns:1fr 1fr; }
+.opt-body .form-grid .field:only-child{ grid-column:1 / -1; }
+.opt-note{ margin-top:10px; font-family:var(--font-mono); font-size:11.5px; color:var(--ink-soft); }
+.side-grid{ grid-template-columns:1fr 1fr; }
+.side-grid .label{ text-transform:none; letter-spacing:.02em; font-size:12px; }
+
+.opt-grid{ grid-template-columns:1fr; }
+.opt-body .form-grid{ grid-template-columns:repeat(3,1fr); }
+@media (max-width:640px){ .opt-body .form-grid{ grid-template-columns:1fr 1fr; } }

@@ -9,9 +9,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20261010c">
+<link rel="stylesheet" href="styles.css?v=20261010f">
 <script>document.documentElement.classList.add('js');</script>
-<script src="site.js?v=20261010c" defer></script>
+<script src="site.js?v=20261010f" defer></script>
 </head>
 <body>
 <header class="topnav" id="topnav">
@@ -161,7 +161,7 @@
     <ol class="howto-list">
       <li><span><b>Выберите режим:</b> «Несущая способность» — прочность стыка при заданных параметрах; «Подбор армирования» — минимальный процент армирования под требуемую нагрузку.</span></li>
       <li><span><b>Задайте параметры</b> — номера на схеме (① e, ② μ, ③ B …) совпадают с номерами полей калькулятора. Наведите на номер или элемент схемы — подсветятся нужные поля.</span></li>
-      <li><span><b>Получите результат</b> — длительную несущую способность Nj в тс/м (или минимальное армирование) — и при необходимости отправьте расчёт нам на проверку.</span></li>
+      <li><span><b>Получите результат</b> — длительную несущую способность Nj в кН/м (или минимальное армирование μ) — и при необходимости отправьте расчёт нам на проверку.</span></li>
     </ol>
     <div class="scheme-wrap scheme-wrap--img">
   <div class="scheme scheme--img">
@@ -225,7 +225,7 @@
       <g class="j-layer" data-parts="anchor" tabindex="0" role="button" aria-label="Узел">
         <rect class="shape node" x="279" y="142" width="4" height="78" fill="#A9B4BD" stroke="#7E8B96" stroke-width=".8"/>
         <rect class="shape node" x="283" y="140" width="7" height="182" rx="1.5" fill="#7E8B96" stroke="#5F6C77" stroke-width=".8"/>
-        <path class="lead" d="M290 262 L548 290" fill="none" stroke="#97A0A6" stroke-width="1"/><circle class="lead-dot" cx="290" cy="262" r="2.2" fill="#97A0A6"/><text class="ptxt" x="552" y="294" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" fill="#142A45">Узел</text>
+        <path class="lead" d="M290 262 L548 290" fill="none" stroke="#97A0A6" stroke-width="1"/><circle class="lead-dot" cx="290" cy="262" r="2.2" fill="#97A0A6"/><circle class="num" cx="560" cy="290" r="9" fill="#FFFFFF" stroke="#12B4C4" stroke-width="1.4"/><text class="num-t" x="560" y="294" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600" fill="#12B4C4">⑦</text><text class="ptxt" x="576" y="294" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" fill="#142A45">Узел</text>
       </g>
 
       <!-- N, ① e -->
@@ -249,18 +249,18 @@
   </div>
   <ul class="legend" aria-label="Что к чему относится">
     <li data-part="ecc" tabindex="0"><b><span class="no">①</span> e — эксцентриситет</b><span class="chips"><i>эксцентриситет</i></span><span class="desc">Смещение нагрузки N относительно оси стены — дополнительный момент в стыке.</span></li>
-    <li data-part="mu" tabindex="0"><b><span class="no">②</span> μ — армирование</b><span class="chips"><i>армирование, %</i></span><span class="desc">Процент армирования стеновых панелей.</span></li>
+    <li data-part="mu" tabindex="0"><b><span class="no">②</span> μ — армирование</b><span class="chips"><i>армирование, %</i></span><span class="desc">Процент армирования стеновых панелей. Входит в приведённую площадь: k<sub>арм</sub> = 1 + n·μ.</span></li>
     <li data-part="wall" tabindex="0"><b><span class="no">③</span> B — бетон СП</b><span class="chips"><i>бетон стеновой панели</i></span><span class="desc">Класс бетона стеновых панелей (СП) над и под плитой.</span></li>
     <li data-part="seam" tabindex="0"><b><span class="no">④</span> t, M — растворный шов</b><span class="chips"><i>толщина шва</i><i>Rm</i></span><span class="desc">Толщина и марка раствора швов над и под плитой.</span></li>
     <li data-part="slab" tabindex="0"><b><span class="no">⑤</span> B — бетон плиты</b><span class="chips"><i>бетон плиты</i></span><span class="desc">Класс бетона плиты перекрытия. Если плита слабее стены, прочность стыка снижается.</span></li>
-    <li data-part="incl" tabindex="0"><b><span class="no">⑥</span> k<sub>вкл</sub> — включения</b><span class="chips"><i>включения</i></span><span class="desc">Электрические коробки в зоне стыка уменьшают площадь контакта.</span></li>
-    <li data-part="area" tabindex="0"><b><span class="no">A</span> площадь контакта</b><span class="chips"><i>t</i><i>dj</i><i>bj</i></span><span class="desc">Базовая площадь контакта: толщина панели, длина стыка вдоль стены и ширина шва.</span></li>
+    <li data-part="incl" tabindex="0"><b><span class="no">⑥</span> k<sub>вкл</sub> — включение</b><span class="chips"><i>галочка</i><i>a × b</i><i>шт</i></span><span class="desc">Электрическая коробка в зоне стыка уменьшает площадь контакта. Без галочки k<sub>вкл</sub> = 1.</span></li>
+    <li data-part="area" tabindex="0"><b><span class="no">A</span> площадь контакта</b><span class="chips"><i>t</i><i>dj</i><i>bj</i></span><span class="desc">Площадь контакта A = t·dj; с учётом арматуры, узла и включений — приведённая площадь A<sub>red</sub>, м².</span></li>
     <li data-part="load" tabindex="0"><b><span class="no">N</span> нагрузка на СП</b><span class="chips"><i>требуемая N</i></span><span class="desc">В режиме «Подбор армирования» — нагрузка, которую должен выдержать стык.</span></li>
     <li data-part="shift" tabindex="0"><b><span class="no">δ</span> монтажные смещения</b><span class="chips"><i>δw</i><i>δp</i></span><span class="desc">Смещения панели и плиты при монтаже уменьшают площадку опирания. На схеме не показаны.</span></li>
-    <li data-part="anchor" tabindex="0"><b><span class="no">—</span> узел</b><span class="chips"><i class="off">не задаётся</i></span><span class="desc">Соединение панелей и плиты. Исследуется в численной модели, в калькулятор будет добавлен по её результатам.</span></li>
+    <li data-part="anchor" tabindex="0"><b><span class="no">⑦</span> k<sub>узел</sub> — узел</b><span class="chips"><i>галочка</i><i>d</i><i>шт</i></span><span class="desc">Соединение панелей и плиты. Учитывается как стержневая арматура диаметром d в приведённой площади — повышает несущую способность. Без галочки не учитывается.</span></li>
   </ul>
 </div>
-    <div class="base-note">Расчёт — по формулам прил. Б СП 63.13330 для одностороннего платформенного стыка. γb1 = 0,9; γb2 = 0,9; γb3 = 0,85. Поправка ηs на армирование уточняется по результатам численных серий; сейчас ηs = 1,0.</div></div>
+    <div class="base-note">Rc — по прил. Б СП 63.13330 для одностороннего платформенного стыка (γb1 = 0,9; γb2 = 0,9; γb3 = 0,85). Несущая способность N = Rc · A<sub>red</sub>, где A<sub>red</sub> = (t·dj + n·(μ·t·dj + A<sub>s,узел</sub>)) · k<sub>вкл</sub>, n = Es / Eb. Без галочек «Включение» и «Узел» они не учитываются. Длительная Nj = 0,9 N. Единицы: МПа, мм, м², кН/м.</div></div>
 </details>
     <div style="margin-top:22px;"><div class="calc-shell" id="calcShell">
   <form class="calc-form" onsubmit="return false;" aria-label="Калькулятор стыка платформенных панелей">
@@ -283,12 +283,34 @@
       <div class="field" data-part="shift"><label for="c_deltaW">δ · Смещения δw / δp, мм</label><div class="pair"><input type="number" id="c_deltaW" value="10" aria-label="δw"><input type="number" id="c_deltaP" value="15" aria-label="δp"></div></div>
     </div>
     <div class="group-label">Факторы стыка</div>
-    <div class="form-grid three">
+    <div class="form-grid">
       <div class="field mode-direct" data-part="mu"><label for="c_arm">② Армирование μ, %</label><input type="number" id="c_arm" value="1.0" step="0.1" min="0"></div>
-      <div class="field mode-select" data-part="load" hidden><label for="c_required">N · Требуемая N, тс/м</label><input type="number" id="c_required" value="80" min="0"></div>
+      <div class="field mode-select" data-part="load" hidden><label for="c_required">N · Требуемая N, кН/м</label><input type="number" id="c_required" value="800" min="0"></div>
       <div class="field mode-select" data-part="mu" hidden><label for="c_maxArm">② Макс. армирование, %</label><input type="number" id="c_maxArm" value="6" step="0.1" min="0"></div>
-      <div class="field" data-part="incl"><label for="c_inclusion">⑥ Включения</label><select id="c_inclusion"></select></div>
       <div class="field" data-part="ecc"><label for="c_ecc">① Эксцентриситет, мм</label><input type="number" id="c_ecc" value="0"></div>
+    </div>
+    <div class="opt-grid">
+      <div class="field opt" data-part="incl">
+        <label class="opt-head"><input type="checkbox" id="c_inclOn"><span class="box" aria-hidden="true"></span><span class="opt-title">⑥ Включение</span><span class="opt-hint">эл. коробка в зоне стыка</span></label>
+        <div class="opt-body" id="c_inclBody" hidden>
+          <div class="form-grid">
+            <div class="field" data-part="incl"><label for="c_inclA">a вдоль стыка, мм</label><input type="number" id="c_inclA" value="70" min="0"></div>
+            <div class="field" data-part="incl"><label for="c_inclB">b по толщине, мм</label><input type="number" id="c_inclB" value="45" min="0"></div>
+            <div class="field" data-part="incl"><label for="c_inclN">Количество на длине dj, шт</label><input type="number" id="c_inclN" value="1" min="1" step="1"></div>
+          </div>
+          <p class="opt-note">Снижает площадь контакта: k<sub>вкл</sub> = 1 − m·a·b / (t·dj)</p>
+        </div>
+      </div>
+      <div class="field opt" data-part="anchor">
+        <label class="opt-head"><input type="checkbox" id="c_nodeOn"><span class="box" aria-hidden="true"></span><span class="opt-title">⑦ Узел</span><span class="opt-hint">соединение панелей и плиты</span></label>
+        <div class="opt-body" id="c_nodeBody" hidden>
+          <div class="form-grid">
+            <div class="field" data-part="anchor"><label for="c_nodeD">Диаметр стержневого аналога d, мм</label><input type="number" id="c_nodeD" value="16" min="0"></div>
+            <div class="field" data-part="anchor"><label for="c_nodeN">Количество на длине dj, шт</label><input type="number" id="c_nodeN" value="1" min="1" step="1"></div>
+          </div>
+          <p class="opt-note">Учитывается как стержневая арматура в приведённой площади: + n·m·πd²/4, n = Es / Eb</p>
+        </div>
+      </div>
     </div>
     <button class="btn btn-navy" id="c_run" type="button">Рассчитать стык</button>
   </form>
@@ -409,6 +431,6 @@
   </div>
   <div class="footer-bottom"><div class="wrap"><span>© 2026 ООО «СЫЗЫМ»</span><span>При поддержке Фонда содействия инновациям · fasie.ru</span></div></div>
 </footer>
-<script src="calc.js?v=20261010c"></script>
+<script src="calc.js?v=20261010f"></script>
 </body>
 </html>
