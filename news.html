@@ -9,9 +9,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20261010f">
+<link rel="stylesheet" href="styles.css?v=20261022a">
 <script>document.documentElement.classList.add('js');</script>
-<script src="site.js?v=20261010f" defer></script>
+<script src="site.js?v=20261022a" defer></script>
 </head>
 <body>
 <header class="topnav" id="topnav">
@@ -153,9 +153,24 @@
 </div></section>
 <section class="block">
   <div class="wrap">
-<details class="dd" id="experiment-plan">
-  <summary><span class="meta">Скоро</span><span class="ttl">Публикация плана эксперимента</span></summary>
-  <div class="dd-body"><p>Раздел будет пополняться по мере прохождения этапов НИОКР: построение модели, серии расчётов, результаты. Первым опубликуем план численного эксперимента — факторы, уровни и состав серий.</p></div>
+<details class="dd" id="calculator-launch">
+  <summary><span class="meta">Октябрь 2026</span><span class="ttl">Методика расчёта и онлайн-калькулятор стыка</span></summary>
+  <div class="dd-body"><p>Завершена разработка методики расчёта одностороннего платформенного стыка железобетонных стеновых панелей. На её основе сделан онлайн-калькулятор: он учитывает класс бетона панелей и плиты, армирование, растворный шов, эксцентриситет нагрузки, включения и узел соединения.</p><p><a href="calculator.html">Рассчитать стык</a></p></div>
+</details><details class="dd" id="fe-model">
+  <summary><span class="meta">Октябрь 2026</span><span class="ttl">Параметрическая расчётная модель стыка</span></summary>
+  <div class="dd-body"><p>Построена параметрическая конечно-элементная модель стыка в ANSYS Mechanical APDL. Геометрия перенесена из 3D-модели узла, а конструктивные параметры вынесены в начало расчётного файла — серии расчётов для разных вариантов стыка запускаются без перестройки модели.</p></div>
+</details><details class="dd" id="test-stand">
+  <summary><span class="meta">Октябрь 2026</span><span class="ttl">Подготовка натурных испытаний стыка</span></summary>
+  <div class="dd-body"><p>Для испытаний фрагмента стыка в натуральную величину выполнен расчёт силового стенда и подобрано гидравлическое оборудование под нагружение вплоть до разрушения образца. Стенд работает в горизонтальном положении: так плиту перекрытия удобно нагружать отдельно от стен. Усилие контролируется по манометрам, перемещения — датчиками часового типа.</p></div>
+</details><details class="dd" id="measurement-system">
+  <summary><span class="meta">Октябрь 2026</span><span class="ttl">Многоканальная тензометрическая система</span></summary>
+  <div class="dd-body"><p>Собрана измерительная система на 36 каналов: 8-канальная тензостанция ZET 017 и 28 дополнительных каналов на собственных модулях. Тензорезисторные розетки установлены на всех трёх элементах стыка, отдельные датчики — на арматуре плиты и анкерном стержне. Написано программное обеспечение для записи показаний по ступеням нагрузки.</p></div>
+</details><details class="dd" id="experiment-plan">
+  <summary><span class="meta">Сентябрь 2026</span><span class="ttl">План численного эксперимента</span></summary>
+  <div class="dd-body"><p>Разработан план численного эксперимента: определены конструктивные параметры, влияющие на прочность стыка, их уровни и состав серий расчётов. План лёг в основу методики расчёта.</p></div>
+</details><details class="dd" id="dic">
+  <summary><span class="meta">Август 2026</span><span class="ttl">Цифровая корреляция изображений на образцах бетона</span></summary>
+  <div class="dd-body"><p>Отработана бесконтактная методика измерения деформаций бетона — цифровая корреляция изображений (DIC). На испытаниях бетонных кубов сравнили три способа нанесения спекл-узора и выбрали оптимальный по точности.</p></div>
 </details><details class="dd" id="company-registration">
   <summary><span class="meta">Ноябрь 2025</span><span class="ttl">Регистрация компании</span></summary>
   <div class="dd-body"><p>19 ноября 2025 года зарегистрировано ООО «СЫЗЫМ» — компания для реализации проекта и вывода методики расчёта стыков на рынок.</p></div>
