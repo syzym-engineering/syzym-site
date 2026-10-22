@@ -9,9 +9,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20261022a">
+<link rel="stylesheet" href="styles.css?v=20261022d">
 <script>document.documentElement.classList.add('js');</script>
-<script src="site.js?v=20261022a" defer></script>
+<script src="site.js?v=20261022d" defer></script>
 </head>
 <body>
 <header class="topnav" id="topnav">
@@ -159,9 +159,10 @@
   <summary><span class="meta">Описание</span><span class="ttl">Как устроен калькулятор и что к чему относится</span></summary>
   <div class="dd-body">
     <ol class="howto-list">
-      <li><span><b>Выберите режим:</b> «Несущая способность» — прочность стыка при заданных параметрах; «Подбор армирования» — минимальный процент армирования под требуемую нагрузку.</span></li>
-      <li><span><b>Задайте параметры</b> — номера на схеме (① e, ② μ, ③ B …) совпадают с номерами полей калькулятора. Наведите на номер или элемент схемы — подсветятся нужные поля.</span></li>
-      <li><span><b>Получите результат</b> — длительную несущую способность Nj в кН/м (или минимальное армирование μ) — и при необходимости отправьте расчёт нам на проверку.</span></li>
+      <li><span><b>Выберите задачу:</b> «Проверить стык» — узнать, какую нагрузку он выдержит; «Подобрать армирование» — найти минимальное армирование под вашу нагрузку.</span></li>
+      <li><span><b>Заполните шаги 1–3.</b> Номера ①–⑦ у полей совпадают с номерами на схеме ниже — наведите на элемент, и нужные поля подсветятся.</span></li>
+      <li><span><b>Отметьте «Добавить включение» или «Добавить узел»,</b> если в вашем стыке есть электрокоробка или сварной анкерный узел.</span></li>
+      <li><span><b>Нажмите «Рассчитать стык» или Enter.</b> Результат — нагрузка на 1 м² площади стыка, в кН/м² или МПа. Его можно отправить нам на проверку.</span></li>
     </ol>
     <div class="scheme-wrap scheme-wrap--img">
   <div class="scheme scheme--img">
@@ -250,81 +251,97 @@
   <ul class="legend" aria-label="Что к чему относится">
     <li data-part="ecc" tabindex="0"><b><span class="no">①</span> e — эксцентриситет</b><span class="chips"><i>эксцентриситет</i></span><span class="desc">Смещение нагрузки N относительно оси стены — дополнительный момент в стыке.</span></li>
     <li data-part="mu" tabindex="0"><b><span class="no">②</span> μ — армирование</b><span class="chips"><i>армирование, %</i></span><span class="desc">Процент армирования стеновых панелей.</span></li>
-    <li data-part="wall" tabindex="0"><b><span class="no">③</span> B — бетон СП</b><span class="chips"><i>бетон стеновой панели</i></span><span class="desc">Класс бетона стеновых панелей (СП) над и под плитой.</span></li>
+    <li data-part="wall" tabindex="0"><b><span class="no">③</span> B — бетон СП</b><span class="chips"><i>класс бетона стеновой панели</i></span><span class="desc">Класс бетона стеновых панелей (СП) над и под плитой.</span></li>
     <li data-part="seam" tabindex="0"><b><span class="no">④</span> t, M — растворный шов</b><span class="chips"><i>толщина шва</i><i>Rm</i></span><span class="desc">Толщина и марка раствора швов над и под плитой.</span></li>
-    <li data-part="slab" tabindex="0"><b><span class="no">⑤</span> B — бетон плиты</b><span class="chips"><i>бетон плиты</i></span><span class="desc">Класс бетона плиты перекрытия. Если плита слабее стены, прочность стыка снижается.</span></li>
-    <li data-part="incl" tabindex="0"><b><span class="no">⑥</span> k<sub>вкл</sub> — включение</b><span class="chips"><i>галочка</i><i>a × b</i><i>шт</i></span><span class="desc">Электрическая коробка в зоне стыка снижает несущую способность. Без галочки не учитывается.</span></li>
+    <li data-part="slab" tabindex="0"><b><span class="no">⑤</span> B — бетон плиты</b><span class="chips"><i>класс бетона плиты</i></span><span class="desc">Класс бетона плиты перекрытия. Если плита слабее стены, прочность стыка снижается.</span></li>
+    <li data-part="incl" tabindex="0"><b><span class="no">⑥</span> включение</b><span class="chips"><i>Добавить включение</i></span><span class="desc">Электрическая коробка в зоне стыка снижает несущую способность. Без галочки не учитывается.</span></li>
     <li data-part="area" tabindex="0"><b><span class="no">A</span> площадь контакта</b><span class="chips"><i>t</i><i>dj</i><i>bj</i></span><span class="desc">Толщина панели, длина стыка вдоль стены и ширина шва.</span></li>
-    <li data-part="load" tabindex="0"><b><span class="no">N</span> нагрузка на СП</b><span class="chips"><i>требуемая N</i></span><span class="desc">В режиме «Подбор армирования» — нагрузка, которую должен выдержать стык.</span></li>
+    <li data-part="load" tabindex="0"><b><span class="no">N</span> нагрузка на СП</b><span class="chips"><i>нагрузка на стык</i></span><span class="desc">В режиме «Подобрать армирование» — нагрузка, которую должен выдержать стык.</span></li>
     <li data-part="shift" tabindex="0"><b><span class="no">δ</span> монтажные смещения</b><span class="chips"><i>δw</i><i>δp</i></span><span class="desc">Смещения панели и плиты при монтаже уменьшают площадку опирания. На схеме не показаны.</span></li>
-    <li data-part="anchor" tabindex="0"><b><span class="no">⑦</span> узел</b><span class="chips"><i>галочка</i><i>d</i><i>шт</i></span><span class="desc">Соединение панелей и плиты. Повышает несущую способность стыка. Без галочки не учитывается.</span></li>
+    <li data-part="anchor" tabindex="0"><b><span class="no">⑦</span> узел</b><span class="chips"><i>Добавить узел</i></span><span class="desc">Соединение панелей и плиты. Повышает несущую способность стыка. Без галочки не учитывается.</span></li>
   </ul>
 </div>
     <div class="base-note">Расчёт выполняется по методике ООО «СЫЗЫМ». Для заключения по вашему узлу отправьте расчёт на проверку. Единицы: МПа, мм, кН/м.</div></div>
 </details>
     <div style="margin-top:22px;"><div class="calc-shell" id="calcShell">
   <form class="calc-form" onsubmit="return false;" aria-label="Калькулятор стыка платформенных панелей">
-    <div class="mode-switch" role="radiogroup" aria-label="Режим расчёта">
-      <label><input type="radio" name="c_mode" value="direct" checked><span>Несущая способность</span></label>
-      <label><input type="radio" name="c_mode" value="select"><span>Подбор армирования</span></label>
+    <div class="mode-cards" role="radiogroup" aria-label="Что нужно рассчитать">
+      <label class="mode-card"><input type="radio" name="c_mode" value="direct" checked><span class="mc-body"><b>Проверить стык</b><small>Какую нагрузку выдержит стык</small></span></label>
+      <label class="mode-card"><input type="radio" name="c_mode" value="select"><span class="mc-body"><b>Подобрать армирование</b><small>Минимальное армирование под вашу нагрузку</small></span></label>
     </div>
-    <div class="group-label">Панели и плита</div>
+
+    <div class="group-label"><span class="step-no">1</span>Стеновые панели и плита</div>
     <div class="form-grid">
-      <div class="field" data-part="wall"><label for="c_classWall">③ Бетон стеновой панели</label><select id="c_classWall"></select></div>
-      <div class="field" data-part="slab"><label for="c_classPlate">⑤ Бетон плиты перекрытия</label><select id="c_classPlate"></select></div>
-      <div class="field" data-part="area"><label for="c_t">A · Толщина панели t, мм</label><input type="number" id="c_t" value="180" min="1"></div>
-      <div class="field" data-part="area"><label for="c_dj">A · Длина стыка dj, мм</label><input type="number" id="c_dj" value="1000" min="1"></div>
+      <div class="field" data-part="wall"><label for="c_classWall">③ Класс бетона стеновой панели</label><select id="c_classWall"></select><span class="hint">Панели над плитой и под ней</span></div>
+      <div class="field" data-part="slab"><label for="c_classPlate">⑤ Класс бетона плиты перекрытия</label><select id="c_classPlate"></select><span class="hint">Плита, которая опирается на стену</span></div>
+      <div class="field " data-part="area"><label for="c_t">Толщина стеновой панели t</label><div class="unit-wrap"><input type="number" id="c_t" value="180" inputmode="decimal" min="1"><span class="unit">мм</span></div><span class="hint">Например, 160 или 180</span></div>
+      <div class="field " data-part="area"><label for="c_dj">Длина стыка dj</label><div class="unit-wrap"><input type="number" id="c_dj" value="1000" inputmode="decimal" min="1"><span class="unit">мм</span></div><span class="hint">Участок стены для расчёта; 1000 — на 1 м</span></div>
     </div>
-    <div class="group-label">Растворный шов</div>
+
+    <div class="group-label"><span class="step-no">2</span>Растворный шов</div>
+    <div class="form-grid three">
+      <div class="field " data-part="seam"><label for="c_Rm">④ Прочность раствора</label><div class="unit-wrap"><input type="number" id="c_Rm" value="10" inputmode="decimal" min="0"><span class="unit">МПа</span></div><span class="hint">М100 ≈ 10 МПа, М150 ≈ 15 МПа</span></div>
+      <div class="field " data-part="seam"><label for="c_tmnom">④ Толщина шва</label><div class="unit-wrap"><input type="number" id="c_tmnom" value="20" inputmode="decimal" min="1"><span class="unit">мм</span></div><span class="hint">Под плитой и над ней, обычно 10–20 мм</span></div>
+      <div class="field " data-part="area"><label for="c_bj">Ширина шва bj</label><div class="unit-wrap"><input type="number" id="c_bj" value="170" inputmode="decimal" min="1"><span class="unit">мм</span></div><span class="hint">Поперёк стены, не больше толщины панели</span></div>
+      <div class="field field-wide" data-part="shift"><label for="c_deltaW">δ · Монтажные смещения</label>
+        <div class="pair">
+          <div class="unit-wrap"><span class="pre">стеновой панели</span><input type="number" id="c_deltaW" value="10" inputmode="decimal" aria-label="Смещение стеновой панели δw, мм"><span class="unit">мм</span></div>
+          <div class="unit-wrap"><span class="pre">плиты перекрытия</span><input type="number" id="c_deltaP" value="15" inputmode="decimal" aria-label="Смещение плиты δp, мм"><span class="unit">мм</span></div>
+        </div>
+        <span class="hint">Допустимые смещения элементов при монтаже</span>
+      </div>
+    </div>
+
+    <div class="group-label"><span class="step-no">3</span>Нагрузка и армирование</div>
     <div class="form-grid">
-      <div class="field" data-part="seam"><label for="c_Rm">④ Прочность раствора Rm, МПа</label><input type="number" id="c_Rm" value="10" min="0"></div>
-      <div class="field" data-part="seam"><label for="c_tmnom">④ Толщина шва, мм</label><input type="number" id="c_tmnom" value="20" min="1"></div>
-      <div class="field" data-part="area"><label for="c_bj">A · Ширина шва bj, мм</label><input type="number" id="c_bj" value="170" min="1"></div>
-      <div class="field" data-part="shift"><label for="c_deltaW">δ · Смещения δw / δp, мм</label><div class="pair"><input type="number" id="c_deltaW" value="10" aria-label="δw"><input type="number" id="c_deltaP" value="15" aria-label="δp"></div></div>
+      <div class="field mode-direct" data-part="mu"><label for="c_arm">② Армирование стеновой панели μ</label><div class="unit-wrap"><input type="number" id="c_arm" value="1.0" inputmode="decimal" step="0.1" min="0"><span class="unit">%</span></div><span class="hint">Процент армирования сечения панели</span></div>
+      <div class="field mode-select" data-part="load" hidden><label for="c_required">N · Нагрузка на стык</label><div class="unit-wrap"><input type="number" id="c_required" value="800" inputmode="decimal" min="0"><span class="unit">кН/м</span></div><span class="hint">Нагрузка от верхних этажей на 1 м стыка</span></div>
+      <div class="field mode-select" data-part="mu" hidden><label for="c_maxArm">② Предел подбора армирования</label><div class="unit-wrap"><input type="number" id="c_maxArm" value="6" inputmode="decimal" step="0.1" min="0"><span class="unit">%</span></div><span class="hint">До какого процента искать решение</span></div>
+      <div class="field " data-part="ecc"><label for="c_ecc">① Эксцентриситет нагрузки e</label><div class="unit-wrap"><input type="number" id="c_ecc" value="0" inputmode="decimal" ><span class="unit">мм</span></div><span class="hint">Смещение нагрузки от оси стены; 0 — по центру</span></div>
     </div>
-    <div class="group-label">Факторы стыка</div>
-    <div class="form-grid">
-      <div class="field mode-direct" data-part="mu"><label for="c_arm">② Армирование μ, %</label><input type="number" id="c_arm" value="1.0" step="0.1" min="0"></div>
-      <div class="field mode-select" data-part="load" hidden><label for="c_required">N · Требуемая N, кН/м</label><input type="number" id="c_required" value="800" min="0"></div>
-      <div class="field mode-select" data-part="mu" hidden><label for="c_maxArm">② Макс. армирование, %</label><input type="number" id="c_maxArm" value="6" step="0.1" min="0"></div>
-      <div class="field" data-part="ecc"><label for="c_ecc">① Эксцентриситет, мм</label><input type="number" id="c_ecc" value="0"></div>
-    </div>
+
+    <div class="group-label"><span class="step-no">4</span>Дополнительно — если есть в вашем узле</div>
     <div class="opt-grid">
       <div class="field opt" data-part="incl">
-        <label class="opt-head"><input type="checkbox" id="c_inclOn"><span class="box" aria-hidden="true"></span><span class="opt-title">⑥ Включение</span><span class="opt-hint">эл. коробка в зоне стыка</span></label>
+        <label class="opt-head"><input type="checkbox" id="c_inclOn"><span class="box" aria-hidden="true"></span><span class="opt-title">⑥ Добавить включение</span><span class="opt-hint">Электрокоробка или отверстие в зоне стыка. Размеры — в плане шва. Снижает несущую способность.</span></label>
         <div class="opt-body" id="c_inclBody" hidden>
           <div class="form-grid">
-            <div class="field" data-part="incl"><label for="c_inclA">a вдоль стыка, мм</label><input type="number" id="c_inclA" value="70" min="0"></div>
-            <div class="field" data-part="incl"><label for="c_inclB">b по толщине, мм</label><input type="number" id="c_inclB" value="45" min="0"></div>
-            <div class="field" data-part="incl"><label for="c_inclN">Количество на длине dj, шт</label><input type="number" id="c_inclN" value="1" min="1" step="1"></div>
+            <div class="field " data-part="incl"><label for="c_inclA">Вдоль стены a</label><div class="unit-wrap"><input type="number" id="c_inclA" value="70" inputmode="decimal" min="0"><span class="unit">мм</span></div></div>
+            <div class="field " data-part="incl"><label for="c_inclB">Поперёк стены b</label><div class="unit-wrap"><input type="number" id="c_inclB" value="45" inputmode="decimal" min="0"><span class="unit">мм</span></div></div>
+            <div class="field " data-part="incl"><label for="c_inclN">Количество</label><div class="unit-wrap"><input type="number" id="c_inclN" value="1" inputmode="decimal" min="1" step="1"><span class="unit">шт</span></div><span class="hint">на длине стыка dj</span></div>
           </div>
-          <p class="opt-note">Снижает несущую способность стыка.</p>
         </div>
       </div>
       <div class="field opt" data-part="anchor">
-        <label class="opt-head"><input type="checkbox" id="c_nodeOn"><span class="box" aria-hidden="true"></span><span class="opt-title">⑦ Узел</span><span class="opt-hint">соединение панелей и плиты</span></label>
+        <label class="opt-head"><input type="checkbox" id="c_nodeOn"><span class="box" aria-hidden="true"></span><span class="opt-title">⑦ Добавить узел</span><span class="opt-hint">Сварной анкерный узел между панелями и плитой. Повышает несущую способность.</span></label>
         <div class="opt-body" id="c_nodeBody" hidden>
           <div class="form-grid">
-            <div class="field" data-part="anchor"><label for="c_nodeD">Диаметр стержневого аналога d, мм</label><input type="number" id="c_nodeD" value="16" min="0"></div>
-            <div class="field" data-part="anchor"><label for="c_nodeN">Количество на длине dj, шт</label><input type="number" id="c_nodeN" value="1" min="1" step="1"></div>
+            <div class="field " data-part="anchor"><label for="c_nodeD">Диаметр анкера d</label><div class="unit-wrap"><input type="number" id="c_nodeD" value="16" inputmode="decimal" min="0"><span class="unit">мм</span></div><span class="hint">Стержень, соединяющий панели через плиту</span></div>
+            <div class="field " data-part="anchor"><label for="c_nodeN">Количество</label><div class="unit-wrap"><input type="number" id="c_nodeN" value="1" inputmode="decimal" min="1" step="1"><span class="unit">шт</span></div><span class="hint">на длине стыка dj</span></div>
           </div>
-          <p class="opt-note">Повышает несущую способность стыка.</p>
         </div>
       </div>
     </div>
-    <button class="btn btn-navy" id="c_run" type="button">Рассчитать стык</button>
+
+    <div class="run-row"><button class="btn btn-navy" id="c_run" type="button">Рассчитать стык</button><span class="run-hint">или нажмите Enter в любом поле</span></div>
   </form>
-  <aside class="calc-side" id="c_side" aria-live="polite">
-    <div>
-      <div class="label" id="c_outLabel">Длительная несущая способность Nj</div>
-      <div class="big-result" id="c_out">—</div>
+  <aside class="calc-side" id="c_side" aria-live="polite"><div class="side-sticky">
+    <div class="side-head">
+      <div class="label" id="c_outLabel">Длительная несущая способность стыка</div>
+      <div class="unit-switch" role="radiogroup" aria-label="Единицы результата">
+        <label><input type="radio" name="c_unit" value="kNm2" checked><span>кН/м²</span></label>
+        <label><input type="radio" name="c_unit" value="MPa"><span>МПа</span></label>
+      </div>
     </div>
+    <div class="big-result" id="c_out">—</div>
+    <div class="unit-note" id="c_unitNote"></div>
+    <div class="stale-note" id="c_stale" role="status"></div>
     <div class="side-grid" id="c_grid"></div>
     <div class="side-note" id="c_note"></div>
     <div class="side-actions">
       <a class="btn btn-accent" id="c_mail" href="mailto:info.ahmet@yandex.ru">Отправить расчёт на проверку</a>
     </div>
-  </aside>
+  </div></aside>
 </div></div>
   </div>
 </section>
@@ -404,6 +421,6 @@
   </div>
   <div class="footer-bottom"><div class="wrap"><span>© 2026 ООО «СЫЗЫМ»</span><span>При поддержке Фонда содействия инновациям · fasie.ru</span></div></div>
 </footer>
-<script src="calc.js?v=20261022a"></script>
+<script src="calc.js?v=20261022d"></script>
 </body>
 </html>

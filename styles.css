@@ -410,3 +410,66 @@ footer.site-footer .fsi-mini img{ width:120px; display:block; }
 /* ---------- Plain list inside dropdowns ---------- */
 .plain-list{ margin:4px 0 0 20px; display:flex; flex-direction:column; gap:6px; color:var(--ink-soft); font-size:15px; }
 .plain-list li::marker{ color:var(--accent); }
+
+/* ================= v10: usability калькулятора ================= */
+/* выбор задачи — две карточки */
+.mode-cards{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:26px; }
+@media (max-width:520px){ .mode-cards{ grid-template-columns:1fr; } }
+.mode-card{ position:relative; cursor:pointer; display:block; }
+.mode-card input{ position:absolute; opacity:0; inset:0; cursor:pointer; }
+.mc-body{ display:flex; flex-direction:column; gap:3px; padding:13px 16px 13px 44px; border:1.5px solid #D5DADE; background:#fff; position:relative; transition:border-color .15s, background .15s; height:100%; }
+.mc-body::before{ content:""; position:absolute; left:16px; top:16px; width:16px; height:16px; border-radius:50%; border:1.5px solid var(--navy); background:#fff; }
+.mc-body b{ font-family:var(--font-display); font-size:15px; color:var(--ink); }
+.mc-body small{ font-size:12.5px; color:var(--ink-soft); line-height:1.35; }
+.mode-card input:checked + .mc-body{ border-color:var(--navy); background:#F4F8FA; }
+.mode-card input:checked + .mc-body::before{ background:var(--navy); box-shadow:inset 0 0 0 3px #fff; }
+.mode-card input:focus-visible + .mc-body{ outline:2px solid var(--accent); outline-offset:2px; }
+
+/* шаги */
+.group-label .step-no{ display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:50%; background:var(--navy); color:#fff; font-size:12px; font-family:var(--font-mono); letter-spacing:0; flex:none; }
+.group-label{ text-transform:none; letter-spacing:0; font-size:15px; color:var(--ink); }
+
+/* поля: единица внутри поля, подсказка под полем */
+.field label{ font-family:var(--font-body); font-size:13.5px; font-weight:600; color:var(--ink); letter-spacing:0; }
+.field .hint{ font-size:12px; color:var(--ink-faint); line-height:1.35; }
+.unit-wrap{ display:flex; align-items:stretch; border:1px solid #D5DADE; background:#fff; border-radius:2px; transition:border-color .15s; min-width:0; }
+.unit-wrap:focus-within{ border-color:var(--accent); outline:2px solid var(--accent); outline-offset:0; }
+.field .unit-wrap input{ border:0; outline:none !important; flex:1; min-width:0; padding:10px 8px 10px 12px; }
+.unit-wrap .unit{ display:flex; align-items:center; padding:0 12px 0 4px; font-family:var(--font-mono); font-size:13px; color:var(--ink-faint); white-space:nowrap; }
+.unit-wrap .pre{ display:flex; align-items:center; padding:0 0 0 10px; font-size:12px; color:var(--ink-faint); white-space:nowrap; }
+.field .pair{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.field.linked .unit-wrap{ border-color:var(--accent); }
+
+/* опции «Добавить …» */
+.opt-head{ align-items:start; }
+.opt-head .box{ margin-top:1px; }
+.opt-hint{ font-size:12.5px; line-height:1.4; }
+
+/* кнопка + подсказка Enter */
+.run-row{ display:flex; align-items:center; flex-wrap:wrap; gap:10px 16px; margin-top:24px; }
+.run-row .btn{ margin-top:0 !important; }
+.run-hint{ font-size:12.5px; color:var(--ink-faint); }
+
+/* панель результата */
+.side-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+.unit-switch{ display:inline-flex; border:1px solid rgba(255,255,255,.35); flex:none; }
+.unit-switch label{ position:relative; cursor:pointer; }
+.unit-switch input{ position:absolute; opacity:0; inset:0; cursor:pointer; }
+.unit-switch span{ display:block; padding:4px 10px; font-family:var(--font-mono); font-size:12px; color:#BFC8CD; }
+.unit-switch input:checked + span{ background:var(--accent); color:var(--navy); font-weight:600; }
+.unit-switch input:focus-visible + span{ outline:2px solid #fff; outline-offset:1px; }
+.calc-side .big-result{ margin-top:6px; }
+.unit-note{ font-size:12px; color:#AEB8BE; margin-top:-6px; }
+@keyframes res-flash{ 0%{ box-shadow:inset 0 0 0 2px var(--accent); } 100%{ box-shadow:inset 0 0 0 2px transparent; } }
+.calc-side.updated{ animation:res-flash .9s ease-out; }
+.form-grid{ align-items:start; }
+.field-wide{ grid-column:1 / -1; }
+.field-wide .pair{ grid-template-columns:1fr 1fr; }
+.opt-body .form-grid{ grid-template-columns:repeat(3,1fr); }
+@media (max-width:640px){ .form-grid.three{ grid-template-columns:1fr; } .field-wide .pair{ grid-template-columns:1fr; } .opt-body .form-grid{ grid-template-columns:1fr 1fr; } }
+.side-sticky{ display:flex; flex-direction:column; gap:16px; }
+.side-sticky .side-actions{ margin-top:8px; }
+@media (min-width:861px){ .calc-side{ display:block; } .side-sticky{ position:sticky; top:96px; } }
+.stale-note:empty{ display:none; }
+.stale-note{ font-size:12.5px; color:var(--navy); background:var(--accent-soft); padding:8px 10px; line-height:1.35; }
+.calc-side.stale .big-result, .calc-side.stale .side-grid, .calc-side.stale .unit-note{ opacity:.4; transition:opacity .2s; }
