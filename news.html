@@ -9,9 +9,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20261022d">
+<link rel="stylesheet" href="styles.css?v=20261022e">
 <script>document.documentElement.classList.add('js');</script>
-<script src="site.js?v=20261022d" defer></script>
+<script src="site.js?v=20261022e" defer></script>
 </head>
 <body>
 <header class="topnav" id="topnav">
@@ -149,35 +149,51 @@
 <section class="page-hero bleed"><div class="wrap">
   <div class="crumbs"><a href="index.html">Главная</a> / Новости</div>
   <h1>Новости проекта</h1>
-  <p>Ход работ по проекту: этапы НИОКР, расчёты, результаты.</p>
+  <p>Ход работ по кварталам: от испытательного стенда и трёхмерных моделей до натурных испытаний и валидации методики.</p>
 </div></section>
 <section class="block">
   <div class="wrap">
-<details class="dd" id="calculator-launch">
-  <summary><span class="meta">Октябрь 2026</span><span class="ttl">Методика расчёта и онлайн-калькулятор стыка</span></summary>
-  <div class="dd-body"><p>Завершена разработка методики расчёта одностороннего платформенного стыка железобетонных стеновых панелей. На её основе сделан онлайн-калькулятор: он учитывает класс бетона панелей и плиты, армирование, растворный шов, эксцентриситет нагрузки, включения и узел соединения.</p><p><a href="calculator.html">Рассчитать стык</a></p></div>
-</details><details class="dd" id="fe-model">
-  <summary><span class="meta">Октябрь 2026</span><span class="ttl">Параметрическая расчётная модель стыка</span></summary>
-  <div class="dd-body"><p>Построена параметрическая конечно-элементная модель стыка в ANSYS Mechanical APDL. Геометрия перенесена из 3D-модели узла, а конструктивные параметры вынесены в начало расчётного файла — серии расчётов для разных вариантов стыка запускаются без перестройки модели.</p></div>
-</details><details class="dd" id="test-stand">
-  <summary><span class="meta">Октябрь 2026</span><span class="ttl">Подготовка натурных испытаний стыка</span></summary>
-  <div class="dd-body"><p>Для испытаний фрагмента стыка в натуральную величину выполнен расчёт силового стенда и подобрано гидравлическое оборудование под нагружение вплоть до разрушения образца. Стенд работает в горизонтальном положении: так плиту перекрытия удобно нагружать отдельно от стен. Усилие контролируется по манометрам, перемещения — датчиками часового типа.</p></div>
-</details><details class="dd" id="measurement-system">
-  <summary><span class="meta">Октябрь 2026</span><span class="ttl">Многоканальная тензометрическая система</span></summary>
-  <div class="dd-body"><p>Собрана измерительная система на 36 каналов: 8-канальная тензостанция ZET 017 и 28 дополнительных каналов на собственных модулях. Тензорезисторные розетки установлены на всех трёх элементах стыка, отдельные датчики — на арматуре плиты и анкерном стержне. Написано программное обеспечение для записи показаний по ступеням нагрузки.</p></div>
-</details><details class="dd" id="experiment-plan">
-  <summary><span class="meta">Сентябрь 2026</span><span class="ttl">План численного эксперимента</span></summary>
-  <div class="dd-body"><p>Разработан план численного эксперимента: определены конструктивные параметры, влияющие на прочность стыка, их уровни и состав серий расчётов. План лёг в основу методики расчёта.</p></div>
+    <div class="quarter reveal">
+  <div class="quarter-head"><span class="q-badge">Квартал 3</span><h2>Натурные испытания и валидация методики</h2></div>
+  <details class="dd" id="full-scale-tests">
+  <summary><span class="ttl">Натурные испытания стыка</span></summary>
+  <div class="dd-body"><p>Для валидации расчётной методики заформованы и испытаны два железобетонных образца стыка — плиты перекрытия и стеновые панели. Образцы нагружались на силовом стенде до разрушения; деформации бетона и арматуры записывались многоканальной тензометрической системой.</p><p>Результаты испытаний согласуются с расчётом по методике — <b>проверка прошла успешно</b>. Программа натурных испытаний продолжается.</p><div class="news-gallery n3"><figure><a href="img/news/test-1.jpg" target="_blank" rel="noopener"><img src="img/news/test-1.jpg" alt="Образец стыка на испытательном стенде" loading="lazy"></a><figcaption>Образец стыка на испытательном стенде</figcaption></figure><figure><a href="img/news/test-2.jpg" target="_blank" rel="noopener"><img src="img/news/test-2.jpg" alt="Стенд и измерительная аппаратура" loading="lazy"></a><figcaption>Стенд и измерительная аппаратура</figcaption></figure><figure><a href="img/news/test-3.jpg" target="_blank" rel="noopener"><img src="img/news/test-3.jpg" alt="Тензодатчики подключены к системе записи" loading="lazy"></a><figcaption>Тензодатчики подключены к системе записи</figcaption></figure></div></div>
 </details><details class="dd" id="dic">
-  <summary><span class="meta">Август 2026</span><span class="ttl">Цифровая корреляция изображений на образцах бетона</span></summary>
-  <div class="dd-body"><p>Отработана бесконтактная методика измерения деформаций бетона — цифровая корреляция изображений (DIC). На испытаниях бетонных кубов сравнили три способа нанесения спекл-узора и выбрали оптимальный по точности.</p></div>
-</details><details class="dd" id="company-registration">
-  <summary><span class="meta">Ноябрь 2025</span><span class="ttl">Регистрация компании</span></summary>
+  <summary><span class="ttl">Цифровая корреляция изображений (DIC)</span></summary>
+  <div class="dd-body"><p>Во время испытаний применена новая методика измерений — цифровая корреляция изображений (DIC). Камера фиксирует поле деформаций по всей поверхности образца, а не только в точках установки датчиков. Это дополнило данные тензометрии и позволило увидеть, как развиваются деформации в зоне стыка.</p><div class="news-gallery n1"><figure><a href="img/news/dic-field.jpg" target="_blank" rel="noopener"><img src="img/news/dic-field.jpg" alt="Поле перемещений бетонного образца по данным DIC" loading="lazy"></a><figcaption>Поле перемещений бетонного образца по данным DIC</figcaption></figure></div></div>
+</details>
+</div>
+    <div class="quarter reveal">
+  <div class="quarter-head"><span class="q-badge">Квартал 2</span><h2>Численный эксперимент и расчётная методика</h2></div>
+  <details class="dd" id="ansys">
+  <summary><span class="ttl">Расчёты трёхмерных моделей в ANSYS</span></summary>
+  <div class="dd-body"><p>Выполнены расчёты трёхмерных моделей стыка в ANSYS Mechanical: определены перемещения элементов, напряжённо-деформированное состояние бетона и усилия в арматуре панелей и плиты.</p><div class="news-gallery n2"><figure><a href="img/news/ansys-deformation.jpg" target="_blank" rel="noopener"><img src="img/news/ansys-deformation.jpg" alt="Перемещения элементов стыка" loading="lazy"></a><figcaption>Перемещения элементов стыка</figcaption></figure><figure><a href="img/news/ansys-rebar.jpg" target="_blank" rel="noopener"><img src="img/news/ansys-rebar.jpg" alt="Напряжения в арматуре" loading="lazy"></a><figcaption>Напряжения в арматуре</figcaption></figure></div></div>
+</details><details class="dd" id="experiment-series">
+  <summary><span class="ttl">Серия численного эксперимента и основа методики</span></summary>
+  <div class="dd-body"><p>Проведена серия из 54 расчётов трёхмерных моделей стыка с варьированием шести параметров: толщины шва, марки раствора, армирования панелей, эксцентриситета нагрузки, класса бетона и наличия включений.</p><p>Результатом серии стали зависимости прочностных характеристик стыка от этих параметров по трём предельным состояниям: образованию трещин, текучести арматуры и разрушению. Эти зависимости легли в основу расчётной методики и <a href="calculator.html">онлайн-калькулятора</a>.</p></div>
+</details>
+</div>
+    <div class="quarter reveal">
+  <div class="quarter-head"><span class="q-badge">Квартал 1</span><h2>Подготовка: стенд и трёхмерные модели</h2></div>
+  <details class="dd" id="test-stand">
+  <summary><span class="ttl">Изготовление испытательного стенда</span></summary>
+  <div class="dd-body"><p>Изготовлен силовой стенд для испытаний стыка: горизонтальная рама с гидравлическими домкратами. В горизонтальном положении плиту перекрытия удобно нагружать отдельно от стеновых панелей.</p><div class="news-gallery n1"><figure><a href="img/news/stand-welding.jpg" target="_blank" rel="noopener"><img src="img/news/stand-welding.jpg" alt="Сварка силовой рамы стенда" loading="lazy"></a><figcaption>Сварка силовой рамы стенда</figcaption></figure></div></div>
+</details><details class="dd" id="models-3d">
+  <summary><span class="ttl">Разработка трёхмерных моделей</span></summary>
+  <div class="dd-body"><p>Разработаны трёхмерные модели стыка: стеновые панели, плита перекрытия, растворные швы, армирование и анкерный узел. Модели стали основой для расчётов в ANSYS.</p><div class="news-gallery n1"><figure><a href="img/news/model-node.jpg" target="_blank" rel="noopener"><img src="img/news/model-node.jpg" alt="Трёхмерная модель анкерного узла" loading="lazy"></a><figcaption>Трёхмерная модель анкерного узла</figcaption></figure></div></div>
+</details>
+</div>
+    <div class="quarter reveal">
+  <div class="quarter-head"><span class="q-badge">2025</span><h2>Старт проекта</h2></div>
+  <details class="dd" id="company-registration">
+  <summary><span class="ttl">Регистрация компании</span></summary>
   <div class="dd-body"><p>19 ноября 2025 года зарегистрировано ООО «СЫЗЫМ» — компания для реализации проекта и вывода методики расчёта стыков на рынок.</p></div>
-</details><details class="dd" id="fsi-grant">
-  <summary><span class="meta">2025</span><span class="ttl">Грант Фонда содействия инновациям</span></summary>
+</details>
+  <details class="dd" id="fsi-grant">
+  <summary><span class="ttl">Грант Фонда содействия инновациям</span></summary>
   <div class="dd-body"><p>Проект «Разработка методики расчёта стыков железобетонных стеновых панелей» получил грантовую поддержку Фонда содействия инновациям по программе «Студенческий стартап». <a href="fsi.html">Подробнее о поддержке</a>.</p></div>
 </details>
+</div>
   </div>
 </section>
 </main>

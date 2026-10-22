@@ -473,3 +473,31 @@ footer.site-footer .fsi-mini img{ width:120px; display:block; }
 .stale-note:empty{ display:none; }
 .stale-note{ font-size:12.5px; color:var(--navy); background:var(--accent-soft); padding:8px 10px; line-height:1.35; }
 .calc-side.stale .big-result, .calc-side.stale .side-grid, .calc-side.stale .unit-note{ opacity:.4; transition:opacity .2s; }
+
+/* ================= v13: новости по кварталам ================= */
+.quarter{ margin-bottom:44px; }
+.quarter:last-child{ margin-bottom:0; }
+.quarter-head{ display:flex; align-items:center; gap:14px; margin-bottom:14px; flex-wrap:wrap; }
+.quarter-head h2{ font-size:clamp(19px,2.4vw,24px); }
+.q-badge{ font-family:var(--font-mono); font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:#fff; background:var(--navy); padding:5px 10px; }
+.news-gallery{ display:grid; gap:10px; margin-top:16px; }
+.news-gallery.n1{ grid-template-columns:minmax(0,560px); }
+.news-gallery.n2{ grid-template-columns:repeat(2,1fr); }
+.news-gallery.n3{ grid-template-columns:repeat(3,1fr); }
+@media (max-width:640px){ .news-gallery.n2, .news-gallery.n3{ grid-template-columns:1fr; } }
+.news-gallery figure{ margin:0; background:#F6F9FA; border:1px solid var(--line); }
+.news-gallery a{ display:block; }
+.news-gallery img{ display:block; width:100%; aspect-ratio:4/3; object-fit:cover; background:#fff; transition:opacity .15s; }
+.news-gallery a:hover img{ opacity:.88; }
+.news-gallery figcaption{ font-size:12.5px; color:var(--ink-soft); padding:8px 10px; }
+#models-3d .news-gallery img, #ansys .news-gallery img{ object-fit:contain; }
+/* карточки новостей на главной с фото */
+.news-card.has-img{ padding:0; overflow:hidden; }
+.news-card.has-img img{ display:block; width:100%; aspect-ratio:16/10; object-fit:cover; border-bottom:1px solid var(--line); }
+.news-card.has-img .date, .news-card.has-img h3, .news-card.has-img p, .news-card.has-img .more{ margin-left:22px; margin-right:22px; }
+.news-card.has-img .date{ margin-top:16px; }
+.news-card.has-img .more{ margin-bottom:20px; }
+.news-card.has-img img.contain{ object-fit:contain; background:#fff; padding:8px; }
+#models-3d .news-gallery.n1{ grid-template-columns:minmax(0,360px); }
+#dic .news-gallery.n1{ grid-template-columns:minmax(0,420px); }
+#dic .news-gallery img{ aspect-ratio:auto; object-fit:contain; }
