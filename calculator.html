@@ -9,9 +9,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=20261022e">
+<link rel="stylesheet" href="styles.css?v=20261022g">
 <script>document.documentElement.classList.add('js');</script>
-<script src="site.js?v=20261022e" defer></script>
+<script src="site.js?v=20261022g" defer></script>
 </head>
 <body>
 <header class="topnav" id="topnav">
@@ -166,7 +166,7 @@
     </ol>
     <div class="scheme-wrap scheme-wrap--img">
   <div class="scheme scheme--img">
-    <svg class="jsvg" viewBox="200 0 440 500" role="img" aria-label="Схема одностороннего платформенного стыка: стеновые панели, плита перекрытия, растворные швы, узел; параметры калькулятора ① e, ② μ, ③ B, ④ t, M, ⑤ B, ⑥ k_вкл, A, N">
+    <svg class="jsvg" viewBox="200 0 440 500" role="img" aria-label="Схема одностороннего платформенного стыка: стеновые панели, плита перекрытия, растворные швы, узел; параметры калькулятора ① e, ② μ, ③ B, ④ t, M, ⑤ B, ⑥ k_вкл, ⑦ узел, A, N, δ">
       <defs>
         <pattern id="jh" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#D3DAE0" stroke-width="1"/></pattern>
         <pattern id="jh2" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#C4CDD4" stroke-width="1"/></pattern>
@@ -186,9 +186,9 @@
       <!-- ② армирование -->
       <g class="j-layer" data-parts="mu" tabindex="0" role="button" aria-label="② μ — армирование панелей">
         <g class="shape rebar" stroke="#5F676E" stroke-width="1.3" stroke-dasharray="6 3" fill="none">
-          <path d="M237 66V188 M337 66V188 M237 330V476 M300 330V476"/>
+          <path d="M237 66V188 M337 66V188 M237 330V476 M337 330V476"/>
         </g>
-        <g class="rebar-dot" fill="#23282D"><circle cx="237" cy="70" r="2.6"/><circle cx="337" cy="70" r="2.6"/><circle cx="237" cy="470" r="2.6"/><circle cx="300" cy="470" r="2.6"/></g>
+        <g class="rebar-dot" fill="#23282D"><circle cx="237" cy="70" r="2.6"/><circle cx="337" cy="70" r="2.6"/><circle cx="237" cy="470" r="2.6"/><circle cx="337" cy="470" r="2.6"/></g>
         <path class="lead" d="M337 66 L548 72" fill="none" stroke="#97A0A6" stroke-width="1"/><circle class="lead-dot" cx="337" cy="66" r="2.2" fill="#97A0A6"/><circle class="num" cx="560" cy="72" r="9" fill="#FFFFFF" stroke="#12B4C4" stroke-width="1.4"/><text class="num-t" x="560" y="76" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600" fill="#12B4C4">②</text><text class="ptxt" x="576" y="76" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" fill="#142A45">μ</text>
       </g>
 
@@ -209,13 +209,6 @@
         <path class="lead" d="M348 201 L548 200" fill="none" stroke="#97A0A6" stroke-width="1"/><circle class="lead-dot" cx="348" cy="201" r="2.2" fill="#97A0A6"/><circle class="num" cx="560" cy="200" r="9" fill="#FFFFFF" stroke="#12B4C4" stroke-width="1.4"/><text class="num-t" x="560" y="204" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600" fill="#12B4C4">④</text><text class="ptxt" x="576" y="204" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" fill="#142A45">t, M</text><path class="lead" d="M348 317 L548 330" fill="none" stroke="#97A0A6" stroke-width="1"/><circle class="lead-dot" cx="348" cy="317" r="2.2" fill="#97A0A6"/><circle class="num" cx="560" cy="330" r="9" fill="#FFFFFF" stroke="#12B4C4" stroke-width="1.4"/><text class="num-t" x="560" y="334" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600" fill="#12B4C4">④</text><text class="ptxt" x="576" y="334" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" fill="#142A45">t, M</text>
       </g>
 
-      <!-- A — площадь контакта -->
-      <g class="j-layer" data-parts="area" tabindex="0" role="button" aria-label="A — площадь контакта">
-        <rect class="glow" x="226" y="193" width="122" height="16" fill="transparent"/>
-        <rect class="glow" x="226" y="309" width="122" height="16" fill="transparent"/>
-        <path class="lead" d="M244 323 L548 398" fill="none" stroke="#97A0A6" stroke-width="1"/><circle class="lead-dot" cx="244" cy="323" r="2.2" fill="#97A0A6"/><text class="ptxt" x="552" y="402" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" fill="#142A45">A</text>
-      </g>
-
       <!-- ⑥ включения -->
       <g class="j-layer" data-parts="incl" tabindex="0" role="button" aria-label="⑥ k_вкл — включения">
         <path class="shape fillable" d="M308 323 H348 V385 H330 V482 H315 V385 H308Z" fill="#DDE3E8" stroke="#97A0A6" stroke-width="1"/>
@@ -229,6 +222,13 @@
         <path class="lead" d="M290 262 L548 290" fill="none" stroke="#97A0A6" stroke-width="1"/><circle class="lead-dot" cx="290" cy="262" r="2.2" fill="#97A0A6"/><circle class="num" cx="560" cy="290" r="9" fill="#FFFFFF" stroke="#12B4C4" stroke-width="1.4"/><text class="num-t" x="560" y="294" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600" fill="#12B4C4">⑦</text><text class="ptxt" x="576" y="294" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" fill="#142A45">Узел</text>
       </g>
 
+      <!-- A — площадь контакта -->
+      <g class="j-layer" data-parts="area" tabindex="0" role="button" aria-label="A — площадь контакта">
+        <rect class="glow" x="226" y="193" width="122" height="16" fill="transparent" pointer-events="none"/>
+        <rect class="glow" x="226" y="309" width="122" height="16" fill="transparent" pointer-events="none"/>
+        <path class="lead" d="M244 323 L548 398" fill="none" stroke="#97A0A6" stroke-width="1"/><circle class="lead-dot" cx="244" cy="323" r="2.2" fill="#97A0A6"/><text class="ptxt" x="552" y="402" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" fill="#142A45">A</text>
+      </g>
+
       <!-- N, ① e -->
       <g class="j-layer" data-parts="load" tabindex="0" role="button" aria-label="N — нагрузка на СП">
         <g class="shape arrows" stroke="#142A45" stroke-width="2" fill="none"><path d="M247 24V48 M275 24V48 M302 24V48 M330 24V48"/></g>
@@ -236,15 +236,25 @@
         <text class="ptxt" x="342" y="22" fill="#142A45" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="16">N</text>
       </g>
       <g class="j-layer" data-parts="ecc" tabindex="0" role="button" aria-label="① e — эксцентриситет">
-        <path class="shape" d="M287 60H300" stroke="#12B4C4" stroke-width="1.6"/>
-        <path class="shape" d="M287 56V64 M300 56V64" stroke="#12B4C4" stroke-width="1.2"/>
-        <path class="lead" d="M300 60 L548 34" fill="none" stroke="#97A0A6" stroke-width="1"/><circle class="lead-dot" cx="300" cy="60" r="2.2" fill="#97A0A6"/><circle class="num" cx="560" cy="34" r="9" fill="#FFFFFF" stroke="#12B4C4" stroke-width="1.4"/><text class="num-t" x="560" y="38" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600" fill="#12B4C4">①</text><text class="ptxt" x="576" y="38" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" fill="#142A45">e</text>
+        <g opacity="0" class="ecc-move" pointer-events="none">
+          <path d="M287 2V44" stroke="#12B4C4" stroke-width="2.8" fill="none"/>
+          <path d="M287 52l-6-11h12z" fill="#12B4C4"/>
+        </g>
+        <g opacity="0" class="ecc-dim" pointer-events="none" stroke="#12B4C4" stroke-width="1.3" fill="none">
+          <path d="M287 64H316 M287 59V69 M316 59V69"/>
+        </g>
+        <text opacity="0" class="ecc-dim" x="297" y="80" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600" fill="#12B4C4" pointer-events="none">e</text>
+        <path class="lead" d="M316 30 L548 34" fill="none" stroke="#97A0A6" stroke-width="1"/><circle class="lead-dot" cx="316" cy="30" r="2.2" fill="#97A0A6"/><circle class="num" cx="560" cy="34" r="9" fill="#FFFFFF" stroke="#12B4C4" stroke-width="1.4"/><text class="num-t" x="560" y="38" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600" fill="#12B4C4">①</text><text class="ptxt" x="576" y="38" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" fill="#142A45">e</text>
       </g>
 
-      <!-- R -->
-      <g aria-hidden="true">
-        <path d="M287 366V332" stroke="#142A45" stroke-width="2"/><path d="M287 326l-5 9h10z" fill="#142A45"/>
-        <text x="295" y="376" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="15" fill="#142A45">R</text>
+      <!-- δ монтажное смещение -->
+      <g class="j-layer" data-parts="shift" tabindex="0" role="button" aria-label="δ — монтажное смещение">
+        <rect opacity="0" class="shift-ghost" x="226" y="55" width="122" height="140" fill="#12B4C4" fill-opacity=".14" stroke="#12B4C4" stroke-width="1.8" pointer-events="none"/>
+        <g opacity="0" class="shift-dim" pointer-events="none" stroke="#12B4C4" stroke-width="1.3" fill="none">
+          <path d="M348 186V202 M362 186V202 M348 194H362"/>
+        </g>
+        <text opacity="0" class="shift-dim" x="350" y="183" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600" fill="#12B4C4" pointer-events="none">δ</text>
+        <path class="lead" d="M348 166 L548 166" fill="none" stroke="#97A0A6" stroke-width="1"/><circle class="lead-dot" cx="348" cy="166" r="2.2" fill="#97A0A6"/><text class="ptxt" x="552" y="170" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" fill="#142A45">δ</text>
       </g>
     </svg>
   </div>
@@ -252,12 +262,12 @@
     <li data-part="ecc" tabindex="0"><b><span class="no">①</span> e — эксцентриситет</b><span class="chips"><i>эксцентриситет</i></span><span class="desc">Смещение нагрузки N относительно оси стены — дополнительный момент в стыке.</span></li>
     <li data-part="mu" tabindex="0"><b><span class="no">②</span> μ — армирование</b><span class="chips"><i>армирование, %</i></span><span class="desc">Процент армирования стеновых панелей.</span></li>
     <li data-part="wall" tabindex="0"><b><span class="no">③</span> B — бетон СП</b><span class="chips"><i>класс бетона стеновой панели</i></span><span class="desc">Класс бетона стеновых панелей (СП) над и под плитой.</span></li>
-    <li data-part="seam" tabindex="0"><b><span class="no">④</span> t, M — растворный шов</b><span class="chips"><i>толщина шва</i><i>Rm</i></span><span class="desc">Толщина и марка раствора швов над и под плитой.</span></li>
+    <li data-part="seam" tabindex="0"><b><span class="no">④</span> t, M — растворный шов</b><span class="chips"><i>толщина шва</i><i>Rm</i><i>bj</i></span><span class="desc">Толщина, марка раствора и ширина швов над и под плитой.</span></li>
     <li data-part="slab" tabindex="0"><b><span class="no">⑤</span> B — бетон плиты</b><span class="chips"><i>класс бетона плиты</i></span><span class="desc">Класс бетона плиты перекрытия. Если плита слабее стены, прочность стыка снижается.</span></li>
     <li data-part="incl" tabindex="0"><b><span class="no">⑥</span> включение</b><span class="chips"><i>Добавить включение</i></span><span class="desc">Электрическая коробка в зоне стыка снижает несущую способность. Без галочки не учитывается.</span></li>
-    <li data-part="area" tabindex="0"><b><span class="no">A</span> площадь контакта</b><span class="chips"><i>t</i><i>dj</i><i>bj</i></span><span class="desc">Толщина панели, длина стыка вдоль стены и ширина шва.</span></li>
+    <li data-part="area" tabindex="0"><b><span class="no">A</span> площадь контакта</b><span class="chips"><i>t</i><i>dj</i></span><span class="desc">Площадь стыка A = t × dj: толщина панели на длину стыка вдоль стены.</span></li>
     <li data-part="load" tabindex="0"><b><span class="no">N</span> нагрузка на СП</b><span class="chips"><i>нагрузка на стык</i></span><span class="desc">В режиме «Подобрать армирование» — нагрузка, которую должен выдержать стык.</span></li>
-    <li data-part="shift" tabindex="0"><b><span class="no">δ</span> монтажные смещения</b><span class="chips"><i>δw</i><i>δp</i></span><span class="desc">Смещения панели и плиты при монтаже уменьшают площадку опирания. На схеме не показаны.</span></li>
+    <li data-part="shift" tabindex="0"><b><span class="no">δ</span> монтажные смещения</b><span class="chips"><i>δw</i><i>δp</i></span><span class="desc">Смещение стеновой панели и плиты при монтаже уменьшает площадку опирания.</span></li>
     <li data-part="anchor" tabindex="0"><b><span class="no">⑦</span> узел</b><span class="chips"><i>Добавить узел</i></span><span class="desc">Соединение панелей и плиты. Повышает несущую способность стыка. Без галочки не учитывается.</span></li>
   </ul>
 </div>
@@ -282,7 +292,7 @@
     <div class="form-grid three">
       <div class="field " data-part="seam"><label for="c_Rm">④ Прочность раствора</label><div class="unit-wrap"><input type="number" id="c_Rm" value="10" inputmode="decimal" min="0"><span class="unit">МПа</span></div><span class="hint">М100 ≈ 10 МПа, М150 ≈ 15 МПа</span></div>
       <div class="field " data-part="seam"><label for="c_tmnom">④ Толщина шва</label><div class="unit-wrap"><input type="number" id="c_tmnom" value="20" inputmode="decimal" min="1"><span class="unit">мм</span></div><span class="hint">Под плитой и над ней, обычно 10–20 мм</span></div>
-      <div class="field " data-part="area"><label for="c_bj">Ширина шва bj</label><div class="unit-wrap"><input type="number" id="c_bj" value="170" inputmode="decimal" min="1"><span class="unit">мм</span></div><span class="hint">Поперёк стены, не больше толщины панели</span></div>
+      <div class="field " data-part="seam"><label for="c_bj">Ширина шва bj</label><div class="unit-wrap"><input type="number" id="c_bj" value="170" inputmode="decimal" min="1"><span class="unit">мм</span></div><span class="hint">Поперёк стены, не больше толщины панели</span></div>
       <div class="field field-wide" data-part="shift"><label for="c_deltaW">δ · Монтажные смещения</label>
         <div class="pair">
           <div class="unit-wrap"><span class="pre">стеновой панели</span><input type="number" id="c_deltaW" value="10" inputmode="decimal" aria-label="Смещение стеновой панели δw, мм"><span class="unit">мм</span></div>
@@ -421,6 +431,6 @@
   </div>
   <div class="footer-bottom"><div class="wrap"><span>© 2026 ООО «СЫЗЫМ»</span><span>При поддержке Фонда содействия инновациям · fasie.ru</span></div></div>
 </footer>
-<script src="calc.js?v=20261022e"></script>
+<script src="calc.js?v=20261022g"></script>
 </body>
 </html>

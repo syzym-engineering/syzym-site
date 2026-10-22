@@ -501,3 +501,14 @@ footer.site-footer .fsi-mini img{ width:120px; display:block; }
 #models-3d .news-gallery.n1{ grid-template-columns:minmax(0,360px); }
 #dic .news-gallery.n1{ grid-template-columns:minmax(0,420px); }
 #dic .news-gallery img{ aspect-ratio:auto; object-fit:contain; }
+
+/* ================= v14: анимация эксцентриситета и монтажного смещения ================= */
+.jsvg .ecc-move{ transform:translateX(0); transition:transform .7s cubic-bezier(.4,0,.2,1), opacity .2s; }
+.jsvg .j-layer.active .ecc-move{ opacity:1; transform:translateX(29px); }
+.jsvg .ecc-dim{ transition:opacity .3s ease .45s; }
+.jsvg .j-layer.active .ecc-dim{ opacity:1; }
+.jsvg .shift-ghost{ transform:translateX(0); transition:transform .7s cubic-bezier(.4,0,.2,1), opacity .2s; }
+.jsvg .j-layer.active .shift-ghost{ opacity:1; transform:translateX(14px); }
+.jsvg .shift-dim{ transition:opacity .3s ease .45s; }
+.jsvg .j-layer.active .shift-dim{ opacity:1; }
+@media (prefers-reduced-motion: reduce){ .jsvg .ecc-move, .jsvg .shift-ghost{ transition:opacity .2s; } }
